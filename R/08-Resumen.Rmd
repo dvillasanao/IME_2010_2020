@@ -1,0 +1,71 @@
+# Resumen  {.unlisted .unnumbered}
+
+```{r, echo = FALSE}
+for(i in tablas){
+load(file = paste0(here::here(), "/Output/IME_", i, ".RData"))
+}
+
+p <- NULL
+for(i in 1:3){
+nombres <- names(get(paste0("DP2_",tablas[i])))
+p[[paste(tablas[i])]] <- get(paste0("DP2_",tablas[i])) %>%
+                           group_by(get(nombres[15])) %>%
+                             summarise(POB_TOT = sum(get(nombres[3])),
+                                       GM = n())
+}
+p <- do.call(cbind.data.frame, p)
+
+tabla <- p %>%
+          select(-c("2015.get(nombres[15])", "2020.get(nombres[15])")) %>%
+           janitor::adorn_totals(fill = "-", where= "row")
+
+tabla %>% 
+ gt() %>%
+  tab_header(title = "Nacional: Población y unidades geograficas según el índice de marginación, 2010-2020") %>%
+   tab_options(heading.title.font.size = 12, 
+               heading.subtitle.font.size = 10,
+               table.font.names = 'montserrat',
+               table.align = "center",
+               table.font.size = 8,
+               data_row.padding = px(1)) %>%
+     tab_style(style = list(cell_text(align = "left",
+                                      weight = 'bold')),
+               locations = list(cells_title(groups = c("title")))) %>%
+     tab_style(style = list(cell_text(align = "left")),
+               locations = list(cells_title(groups = c("subtitle")))) %>%
+     tab_style(style = list(cell_text(weight = 'bold')),
+               locations = cells_body(columns = everything(), rows = tidyselect::last_col())) %>%
+      cols_label(`2010.POB_TOT` = md("**Población 2010**"),
+                 `2015.POB_TOT` = md("**Población 2015**"),
+                 `2020.POB_TOT` = md("**Población 2020**"),
+                 `2010.GM` = md("**Estados**"),
+                 `2015.GM` = md("**Estados**"),
+                 `2020.GM` = md("**Estados**"),
+                 "2010.get(nombres[15])" = md("**Grados**")) %>%
+       fmt_integer(columns = c(2,4,6), sep_mark = " ") %>%
+        tab_spanner(label = "2010",
+                    columns = c(2:3)) %>%
+        tab_spanner(label = "2015",
+                    columns = c(4:5)) %>%
+        tab_spanner(label = "2020",
+                    columns = c(6:7)) %>%
+         as_raw_html() 
+```
+
+
+
+## Mapa a nivel estatal {-}
+
+
+```{r, echo=FALSE, out.width='100%', warning=FALSE, message=FALSE}
+p <- readRDS(paste0(here::here(),"/Output/Mapa.rds"))
+p 
+```
+
+
+## Comparación en el tiempo {-}
+
+
+```{r, echo=FALSE, out.width='100%'}
+readRDS(paste0(here::here(),"/Output/Mapas_2010-2020.rds"))
+```

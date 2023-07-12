@@ -1,0 +1,33 @@
+# Referencias  {.unlisted .unnumbered}
+
+```{r echo = FALSE}
+knitr::opts_knit$set(root.dir = rprojroot::find_rstudio_root_file())
+setwd(here::here())
+``` 
+
+Dalenius, T. (1950). The problem of optimum stratification. Scandinavian Actuarial J., 3-4, 203-13. Recuperado de: https://doi.org/10.1080/03461238.1950.10432042    
+__________ y Hodges, J. L., Jr. (1959). Minimum variance stratification. Journal of the American Statistical Association, 54, 88-101.      
+Gunning, P. y Horgan, J. M. (2004). A new algorithm for the construction of stratum boundaries in skewed populations. Survey Methodology, 30 (2), 159–166.   
+
+Pena Trapero, J. B. (1977). Problemas de la medición del bienestar y conceptos afines. Una aplicación al Caso Español. I. N. E: Madrid.   
+
+Somarriba, N. y Pena, B. (2009). Synthetic Indicators of Quality of Life in Europe. Social Indicators Research. Recuperado de: https://doi.org/10.1007/s11205-008-9356-y    
+__________, Zarzosa, P. y Pena, T. (2013). La calidad de vida en la Unión Europea. Un análisis temporal por medio de indicadores sintéticos.    Congreso de la Asociación Española de Ciencia Regional. XXXIX Reunión de Estudios Regionales. Smart regions for a smarter growth strategy: new challenges of Regional Policy and potentials of cities to overcome a worldwide economic crisis. Recuperado de:  https://old.reunionesdeestudiosregionales.org/Oviedo2013/htdocs/pdf/p851.pdf     
+
+Zarzosa, P. (1996). Aproximación a la medición del bienestar social. Secretario de Publicaciones: Valladolid.    
+__________. (2009). Estimación de la pobreza en las comunidades autónomas españolas, mediante la distancia DP2 de Pena. Estudios de Economía Aplicada, 27 (2), 397–416.
+__________. (2012). The Social Welfare in Spain before the Crisis: Territorial and Chronological Analysis. International Journal of Advances in Management and Economics 1 (4), 165-171.   
+__________ y Somarriba, N. (2013). An Assessment of Social Welfare in Spain: Territorial Analysis Using a Synthetic Welfare Indicator. Social Indicators Research, 111, 1-23.    
+
+ 
+
+```{r, collapse=FALSE}
+sesion_info <- devtools::session_info()
+```
+
+
+```{r, echo = FALSE}
+kable(dplyr::select(tibble::as_tibble(sesion_info$packages %>% dplyr::filter(attached == TRUE)),
+                    c(package, loadedversion, source))) %>%
+   kable_classic(full_width = TRUE, html_font = "montserrat", font_size = 10) 
+```
