@@ -38,7 +38,6 @@ vignettes/*.pdf
 # R Environment Variables
 .Renviron
 
-img/
 Output/
 Graficos/
 _bookdown_files/
