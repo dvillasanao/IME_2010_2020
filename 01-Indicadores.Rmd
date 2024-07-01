@@ -1,0 +1,164 @@
+# Indicadores simples  {.unlisted .unnumbered}  
+
+
+El índice de marginación considera cuatro dimensiones estructurales, identifica nueve formas de exclusión y mide su intensidad espacial como porcentaje de la población que no participa del disfrute de bienes y servicios esenciales para el desarrollo de sus capacidades básicas. A continuación pueden verse las nueve formas de exclusión social de origen estructural que capta el índice de marginación, así como los indicadores utilizados.   
+
+### Porcentaje de población analfabeta de 15 años o más $(I_{1}^{i})$ {-}
+	
+El indicador se obtiene dividiendo el monto de población de 15 años o más que declaró no saber leer y escribir un recado, entre la diferencia de la población total de 15 años o más y aquellos que no especificaron su condición de alfabetismo:  
+
+$$I_{1}^{i}=\frac{PAN_{15+}^{i}}{P_{15+}^{i}- PNEALF_{15+}^{i}}×100$$
+
+donde:
+
+$PAN_{15+}^{i}$: es la población de 15 años o más analfabeta,   
+$P_{15+}^{i}$: es la población total de 15 años o más, y   
+$PNEALF_{15+}^{i}$: es la población de 15 años o más que no especificó su condición de alfabetismo.   
+
+### 	Porcentaje de población de 15 años o más sin educación básica $(I_{2}^{i})$ {-}
+
+El indicador mide la magnitud de la población sin educación básica completa. Su cálculo se realiza en dos etapas. En la primera, la población que no especificó su último grado aprobado en secundaria o en estudios técnicos o comerciales con primaria terminada, se distribuye entre la población que aprobó entre uno y dos grados en estos mismos niveles educativos, aplicando la siguiente fórmula:   
+
+$${PSI}_{15+}^{i}={PSCI}_{15+}^i+\left[\frac{{PSCI}_{15+}^i}{{PSCI}_{15+}^i+{PSCC}_{15+}^i}\times{PNEGS}_{15+}^i\right]$$
+
+
+donde:    
+
+$P{SI}_{15+}^{i}$: es la población de 15 años o más que aprobó entre el primer y segundo grado de secundaria o estudios técnicos o comerciales con primaria terminada con los no especificados de estos niveles educativos ya distribuidos,  
+${PSCI}_{15+}^{i}$: es la población de 15 años o más que declaró haber aprobado entre el primer y segundo grado de secundaria o estudios técnicos o comerciales con primaria terminada,  
+${PSCC}_{15+}^{i}$: es la población de 15 años o más que cursó el tercer grado en secundaria o tres o cuatro grados en estudios técnicos o comerciales con primaria terminada, y  
+${PNEGS}_{15+}^{i}$: es la población de 15 años o más que no especificó su último grado cursado en secundaria o en estudios técnicos o comerciales con primaria terminada.  
+
+Con el dato de la población con estudios truncos en secundaria o en estudios técnicos o comerciales con primaria terminada, se procedió a calcular el indicador de porcentaje de población sin educación básica. Este porcentaje se calcula dividiendo la población de 15 años o más sin educación básica, entre la diferencia de la población total de 15 años o más y aquellos que no especificaron su nivel educativo:   
+
+$$I_{2}^{i}=\frac{{PSIN}_{15+}^i+{PPI}_{15+}^i+{PSI}_{15+}^i}{P_{15+}^i-{PNEIN}_{15+}^i}\times100$$
+
+donde:
+
+${PSIN}_{15+}^{i}$: es la población de 15 años o más sin instrucción,  
+${PPI}_{15+}^{i}$: es la población de 15 años o más con algún grado en educación primaria,  
+${PSI}_{15+}^{i}$: es la población de 15 años o más con nivel incompleto de secundaria o estudios técnicos o comerciales con primaria terminada,   
+$P_{15+}^{i}$: es la población total de 15 años o más, y   
+${PNEIN}_{15+}^{i}$: es la población de 15 años o más que no especificó su nivel de instrucción.   
+
+
+### Porcentaje de ocupantes en viviendas particulares sin drenaje ni sanitario $(I_{3}^{i})$ {-} 
+
+Este porcentaje se obtiene al dividir el número de ocupantes de viviendas particulares sin drenaje ni sanitario, entre el número de ocupantes en viviendas particulares, menos el número de ocupantes de viviendas particulares en donde no se especificó la disponibilidad de drenaje ni sanitario:  
+
+$$I_{3}^{i}=\frac{{OVSDS}^{i}}{{OVP}^{i}-{ONEDS}^{i}}\times100$$
+
+
+donde:
+
+${OVSDS}^{i}$: son los ocupantes de viviendas particulares sin disponibilidad de drenaje ni sanitario,   
+${OVP}^{i}$: es el total de ocupantes en viviendas particulares, y   
+${ONEDS}^{i}$: son los ocupantes de viviendas particulares en donde no se especificó la disponibilidad de drenaje ni sanitario.    
+
+### Porcentaje de ocupantes en viviendas particulares sin energía eléctrica $(I_{4}^{i})$ {-}
+
+Este indicador se obtiene al dividir el número de ocupantes de viviendas particulares sin disponibilidad de energía eléctrica, entre el número de ocupantes en viviendas particulares menos el número de ocupantes de viviendas particulares en donde no se especificó la existencia de luz eléctrica:   
+
+$$I_{4}^{i}=\frac{{OSEE}^i}{{OVP}^{i}-{ONEEE}^{i}}\times100$$  
+donde:   
+
+${OVSDS}^{i}$: son los ocupantes de viviendas particulares sin disponibilidad de drenaje ni sanitario,  
+${OVP}^{i}$: es el total de ocupantes en viviendas particulares, y   
+${ONEDS}^{i}$: son los ocupantes de viviendas particulares en donde no se especificó la disponibilidad de drenaje ni sanitario.   
+
+
+### Porcentaje de ocupantes en viviendas particulares sin agua entubada $(I_{5}^{i})$ {-}     
+	
+Para obtener este indicador se divide el número de ocupantes en viviendas particulares que no disponen de agua entubada, entre la diferencia del total de ocupantes en viviendas particulares y el total de ocupantes en viviendas en donde no se especificó la disponibilidad de agua entubada:   
+
+$$I_{5}^{i}=\frac{{OSAE}^i}{{OVP}^i-{ONEAE}^i}\times100$$  
+
+donde:  
+
+${OSAE}^{i}$: son los ocupantes de viviendas particulares sin disponibilidad de agua entubada,  
+${OVP}^{i}$: es el total de ocupantes en viviendas particulares, y   
+${ONEAE}^{i}$: son los ocupantes de viviendas particulares en donde no se especificó la disponibilidad de agua entubada.  
+
+
+### Porcentaje de ocupantes en viviendas particulares con piso de tierra $(I_{6}^{i})$ {-} 
+
+En este indicador se identifican los ocupantes de viviendas particulares con piso de tierra y se divide entre el total de ocupantes en viviendas particulares, menos el número de ocupantes de viviendas particulares en donde no se especificó el material predominante en pisos:    
+
+$$I_{6}^{i}=\frac{{OPT}^i}{{OVP}^i-{ONEMP}^i}\times100$$   
+
+donde:   
+
+${OPT}^{i}$: son los ocupantes de viviendas particulares con piso de tierra,    
+${OVP}^{i}$: es el total de ocupantes en viviendas particulares, y   
+${ONEMP}^{i}$: son los ocupantes de viviendas particulares en las que no se especificó el material predominante en pisos.    
+
+### Porcentaje de ocupantes en viviendas particulares con hacinamiento $(I_{7}^{i})$ {-}  
+
+El procedimiento para el cálculo de este indicador constó de dos etapas. Primero, en cada vivienda particular habitada se dividió el número de ocupantes entre el número de cuartos dormitorio, para identificar las viviendas con hacinamiento:   
+
+$$VHAC=\frac{OVP}{CDVP}$$
+donde:
+
+$VHAC$: es la vivienda con hacinamiento,   
+$OVP$: es el número de ocupantes que residen habitualmente una vivienda particular, y   
+$CDVP$: es el número de cuartos dormitorio en una vivienda particular.   
+	
+En la segunda fase de cálculo, se dividió el número de ocupantes en viviendas particulares con hacinamiento, entre el total de ocupantes en viviendas particulares habitadas menos el número de ocupantes en viviendas particulares habitadas donde no se especificó el número de cuartos dormitorio:     
+
+$$I_{7}^{i}=\frac{O{VHAC}^i}{{OVP}^i-{ONECD}^i}\times100$$    
+
+donde:
+
+${OVHAC}^{i}$: son los ocupantes en viviendas particulares con hacinamiento,   
+${OVP}^{i}$: es el total de ocupantes en viviendas particulares, y   
+${ONECD}^{i}$: son los ocupantes en viviendas particulares en donde no se especificó el número de cuartos dormitorio.     
+
+### Porcentaje de población en localidades con menos de cinco mil habitantes $(I_{8}^{i})$ {-}  
+	
+Este indicador se obtiene al dividir la suma de la población que habita en localidades con menos de cinco mil habitantes, entre la población total:    
+
+$$I_{8}^{i}=\frac{\text{PL.5M}^{i}}{{P}^i}\times100$$  
+
+donde:   
+$\text{PL.5M}^{i}$: es la población en localidades con menos de cinco mil habitantes, y      
+$P^{i}$: es la población total.    
+
+### Porcentaje de población ocupada con ingresos de hasta dos salarios mínimos $(I_{9}^{i})$ {-} 
+
+En este indicador se identificó la población ocupada que no recibe ingresos por trabajo, más aquella población ocupada que percibe hasta dos salarios mínimos, dividiéndose entre el total de la población ocupada:         
+
+$$I_{9}^{i}=\frac{{P2SM}^{i}}{{PO}^i}\times100$$   
+
+donde:   
+
+${P2SM}^{i}$: es la población ocupada que no recibe ingresos por trabajo o que sólo percibe hasta dos salarios mínimos, y     
+${PO}^{i}$: es el total de población ocupada.        
+
+**Indicadores simples**  
+
+```{r}
+Indicadores <- c(
+                 'Porcentaje de población de 15 años o más analfabeta', 
+                 'Porcentaje de población de 15 años o más sin educación básica',
+                 'Porcentaje de ocupantes en viviendas sin drenaje ni excusado',
+                 'Porcentaje de ocupantes en viviendas sin energía eléctrica', 
+                 'Porcentaje de ocupantes en viviendas sin agua entubada', 
+                 'Porcentaje de viviendas con algún nivel de hacinamiento',
+                 'Porcentaje de ocupantes en viviendas con piso de tierra',
+                 'Porcentaje de población en localidades con menos de 5 000 habitantes', 
+                 'Porcentaje de población ocupada con ingresos de hasta 2 salarios mínimos'
+                 )
+```
+	
+
+
+
+
+	
+
+	
+	
+ 
+
+
+

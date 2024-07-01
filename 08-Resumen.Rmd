@@ -1,0 +1,86 @@
+# Resumen  {.unlisted .unnumbered}
+
+```{r, echo = FALSE}
+for(i in tablas){
+load(file = paste0(here::here(), "/Output/IME_", i, ".RData"))
+}
+
+p <- NULL
+for(i in 1:3){
+nombres <- names(get(paste0("DP2_",tablas[i])))
+p[[paste(tablas[i])]] <- get(paste0("DP2_",tablas[i])) %>%
+                           group_by(get(nombres[15])) %>%
+                             summarise(POB_TOT = sum(get(nombres[3])),
+                                       GM = n())
+}
+p <- do.call(cbind.data.frame, p)
+
+tabla <- p %>%
+          select(-c("2015.get(nombres[15])", "2020.get(nombres[15])")) %>%
+           janitor::adorn_totals(fill = "-", where= "row")
+
+tabla %>% 
+ gt() %>%
+  tab_header(title = "Nacional: Población y unidades geograficas según el índice de marginación, 2010-2020") %>%
+   tab_options(heading.title.font.size = 12, 
+               heading.subtitle.font.size = 10,
+               table.font.names = 'montserrat',
+               table.align = "center",
+               table.font.size = 8,
+               data_row.padding = px(1)) %>%
+     tab_style(style = list(cell_text(align = "left",
+                                      weight = 'bold')),
+               locations = list(cells_title(groups = c("title")))) %>%
+     tab_style(style = list(cell_text(align = "left")),
+               locations = list(cells_title(groups = c("subtitle")))) %>%
+     tab_style(style = list(cell_text(weight = 'bold')),
+               locations = cells_body(columns = everything(), rows = tidyselect::last_col())) %>%
+      cols_label(`2010.POB_TOT` = md("**Población 2010**"),
+                 `2015.POB_TOT` = md("**Población 2015**"),
+                 `2020.POB_TOT` = md("**Población 2020**"),
+                 `2010.GM` = md("**Estados**"),
+                 `2015.GM` = md("**Estados**"),
+                 `2020.GM` = md("**Estados**"),
+                 "2010.get(nombres[15])" = md("**Grados**")) %>%
+       fmt_integer(columns = c(2,4,6), sep_mark = " ") %>%
+        tab_spanner(label = "2010",
+                    columns = c(2:3)) %>%
+        tab_spanner(label = "2015",
+                    columns = c(4:5)) %>%
+        tab_spanner(label = "2020",
+                    columns = c(6:7)) %>%
+         as_raw_html() 
+```
+
+El índice de marginación permite clasificar las entidades federativas según el impacto global de las carencias que sufre la población debido a la falta de acceso a la educación, la residencia en viviendas inadecuadas, los bajos ingresos monetarios y la falta de servicios de salud, equipamientos e infraestructura adecuada en las localidades. Estas condiciones crean una estructura precaria de oportunidades que obstruye el pleno desarrollo del potencial humano.   
+
+La tabla presenta una comparación temporal del grado de marginación a nivel estatal en México, desagregada por el grado de marginación para los años 2010, 2015 y 2020.   
+
+**Observaciones Clave**  
+
+**1.- Incremento en la Población de Grado Alto y Muy Alto:**    
+Hay un aumento constante en la población en grados de marginación Alto y Muy Alto de 2010 a 2020. En 2010, 10 estados representaban el 33.6% de la población en estas categorías. Para 2015, este número aumentó a 11 estados, abarcando el 34.5% de la población. En 2020, 12 estados, con el 35.2% de la población, vivían en condiciones de marginación alta y muy alta.    
+
+**2.- Disminución en Grados Bajo y Muy Bajo:**    
+La población en grados de marginación Bajo y Muy Bajo muestra una tendencia a la baja. En 2010, el 53.1% de la población residía en 15 estados con grados de marginación bajo y muy bajo. Para 2015, esta proporción disminuyó a 13 estados con el 49.3% de la población. En 2020, el 46.9% de la población vivía en 12 estados con grados de marginación bajo y muy bajo.    
+
+**3.- Estabilidad en Grado Muy Alto:** 
+La población en el grado de marginación Muy Alto se mantuvo constante en los estados de Oaxaca, Guerrero y Chiapas durante los tres años. Sin embargo, hubo mejoras significativas en el bienestar de las personas en Oaxaca y Chiapas, según el índice de marginación.   
+ 
+
+
+## Mapa a nivel estatal {-}
+
+
+```{r, echo=FALSE, out.width='100%', warning=FALSE, message=FALSE}
+p <- readRDS(paste0(here::here(),"/Output/Mapa.rds"))
+p 
+```
+
+
+## Comparación en el tiempo {-}
+
+
+```{r, echo=FALSE, out.width='100%'}
+readRDS(paste0(here::here(),"/Output/Mapas_2010-2020.rds"))
+```

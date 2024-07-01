@@ -1,0 +1,152 @@
+--- 
+title: "Índice de marginación a nivel estatal 2010 - 2020"
+author: "Diana Villasana Ocampo"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography: [book.bib, packages.bib]
+url: https://github.com/dvillasanao/IME_2010_2020
+cover-image: https://raw.githubusercontent.com/mxabierto/assets/master/img/logos/conapo.png
+description: |
+  This is a minimal example of using the bookdown package to write a book.
+  The HTML output format for this example is bookdown::bs4_book,
+  set in the _output.yml file.
+biblio-style: apalike
+csl: chicago-fullnote-bibliography.csl
+---
+
+# Índice de marginación a nivel estatal  {.unlisted .unnumbered}
+
+El índice de marginación del Consejo Nacional de Población (`CONAPO`) celebra 30 años desde su primera publicación en 1990, originalmente en conjunto con la Comisión Nacional del Agua. A lo largo de tres décadas, este índice ha demostrado ser una herramienta crucial para programas y políticas públicas enfocadas en la identificación de poblaciones objetivo y la asignación de subsidios.
+
+**Historia y Evolución**:
+
+- Décadas de `1970` y `1980`: Inicios de ejercicios de medición de aspectos relacionados con la desigualdad.   
+
+- `1990`: Primera publicación oficial del índice, utilizando el Análisis de Componentes Principales (ACP). Este método permitió simplificar la información en un indicador sintético pero carecía de comparabilidad temporal.   
+- Demanda de Comparabilidad: La necesidad de comparabilidad en el tiempo llevó a una revisión metodológica, impulsada por usuarios académicos y gubernamentales.   
+
+**Cambio Metodológico**:
+
+- Nueva Técnica: Se adoptó la técnica de Distancias Ponderadas al Cuadrado para las estimaciones de 2020. Esta técnica garantiza la comparabilidad temporal y mejora el procesamiento de datos, elevando la calidad de los resultados.    
+- Ajustes en Indicadores: Se realizaron ajustes para alinear las estimaciones con las recomendaciones de organismos nacionales e internacionales.    
+- Método de Estratificación: Se mantuvo la técnica de estratificación de Dalenius y Hodges para el cálculo de los estratos del índice.   
+
+**Impacto y Futuro**:   
+
+El objetivo principal de este índice es proporcionar información objetiva y cuantitativa sobre las disparidades socioeconómicas entre las entidades federativas, de manera que se pueda orientar la toma de decisiones y la asignación de recursos para reducir la marginación y promover un desarrollo más equitativo en el país. La información proporcionada por el índice de marginación permite identificar las entidades federativas con mayores niveles de marginación y desigualdad, así como aquellas que presentan avances y mejoras en su desarrollo socioeconómico. Esto facilita la identificación de buenas prácticas y la generación de estrategias de intervención focalizadas en áreas específicas.    
+
+**Base de datos** de los tres años se encuentran disponibles en la página oficial de [CONAPO](https://www.gob.mx/conapo/documentos/indices-de-marginacion-2020-284372)   
+
+**Datos abiertos de México** [datos.gob.mx](https://datos.gob.mx/busca/dataset/indice-de-marginacion-carencias-poblacionales-por-localidad-municipio-y-entidad)   
+
+**Publicación** [Índice De Marginación Por Entidad Federativa Y Municipio 2020](https://www.gob.mx/conapo/documentos/indices-de-marginacion-2020-284372).    
+
+```{r, include=FALSE}
+# automatically create a bib database for R packages
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, cache = TRUE, 
+                       eval = TRUE)
+knitr::opts_knit$set(root.dir = rprojroot::find_rstudio_root_file())
+setwd(rprojroot::find_rstudio_root_file())
+```  
+
+```{r, echo=FALSE, results=FALSE}
+#Font Stlye
+require(showtext)
+library(extrafont)
+# activar showtext
+windowsFonts()
+#Montserrat Medium
+```
+
+
+
+```{r, echo = FALSE, results=FALSE}
+# Librerías que se usaron en el documento
+require(ggplot2)
+require(ggridges)
+require(grDevices)
+require(ggpubr)
+require(dplyr)
+require(p2distance)
+require(stratification)
+require(knitr)
+require(magrittr)
+require(kableExtra)
+require(openxlsx)
+require(tidyverse)
+require(readxl)
+require(psych)
+require(stringr)
+require(corrplot)
+require(forcats)
+require(gt)
+require(sf)
+require(rgdal)      
+require(geojsonio)
+require(jsonlite)
+```
+
+```{r include=FALSE, eval=FALSE}
+# automatically create a bib database for R packages
+knitr::write_bib(c(
+  .packages(), 'bookdown', 'knitr', 'rmarkdown', 'dp2distance', 'statification', 'corrplot'
+), 'packages.bib')
+```
+
+
+```{r, echo = FALSE}
+tablas <- c("2010", "2015", "2020")
+
+for(i in tablas){
+load(file = paste0(here::here(), "/Output/IME_", i, ".RData"))
+}
+
+p <- NULL
+for(i in 1:3){
+nombres <- names(get(paste0("DP2_",tablas[i])))
+p[[paste(tablas[i])]] <- get(paste0("DP2_",tablas[i])) %>%
+                           group_by(get(nombres[15])) %>%
+                             summarise(POB_TOT = sum(get(nombres[3])),
+                                       GM = n())
+}
+p <- do.call(cbind.data.frame, p)
+
+tabla <- p %>%
+          select(-c("2015.get(nombres[15])", "2020.get(nombres[15])")) %>%
+           janitor::adorn_totals(fill = "-", where= "row")
+
+tabla %>% 
+ gt() %>%
+  tab_header(title = "Nacional: Población y unidades geograficas según el grado de marginación, 2010-2020") %>%
+   tab_options(heading.title.font.size = 12, 
+               heading.subtitle.font.size = 10,
+               table.font.names = 'Montserrat Medium',
+               table.align = "center",
+               table.font.size = 8,
+               data_row.padding = px(1)) %>%
+     tab_style(style = list(cell_text(align = "left",
+                                      weight = 'bold')),
+               locations = list(cells_title(groups = c("title")))) %>%
+     tab_style(style = list(cell_text(align = "left")),
+               locations = list(cells_title(groups = c("subtitle")))) %>%
+     tab_style(style = list(cell_text(weight = 'bold')),
+               locations = cells_body(columns = everything(), rows = tidyselect::last_col())) %>%
+      cols_label(`2010.POB_TOT` = md("**Población 2010**"),
+                 `2015.POB_TOT` = md("**Población 2015**"),
+                 `2020.POB_TOT` = md("**Población 2020**"),
+                 `2010.GM` = md("**Estados**"),
+                 `2015.GM` = md("**Estados**"),
+                 `2020.GM` = md("**Estados**"),
+                 "2010.get(nombres[15])" = md("**Grados**")) %>%
+       fmt_integer(columns = c(2,4,6), sep_mark = " ") %>%
+        tab_spanner(label = "2010",
+                    columns = c(2:3)) %>%
+        tab_spanner(label = "2015",
+                    columns = c(4:5)) %>%
+        tab_spanner(label = "2020",
+                    columns = c(6:7)) %>%
+         as_raw_html() 
+
+write.xlsx(tabla, file = paste0(here::here(), "/Output/resumen.xlsx"))
+```
+

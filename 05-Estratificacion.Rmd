@@ -1,0 +1,240 @@
+# Método de estratificación  {.unlisted .unnumbered}
+
+
+### Método de estratificación de Dalenius & Hodges {-}
+
+`strata.cumrootf`: cumulative root frequency method by Dalenius and Hodges (1959). 
+
+Con la obtención del índice de marginación a través del método DP2, los valores se clasificaron en cinco categorías ordinales con el método de Dalenius y Hodges (1959), para obtener el grado de marginación. Este método forma estratos de manera que la varianza sea mínima al interior de cada estrato y máxima entre cada uno de ellos, es decir, son lo más homogéneos posibles. Este procedimiento utiliza la raíz de las frecuencias acumuladas para la construcción de los estratos, por lo que se lleva a cabo para la división de la población en el estrato L. Esta es una solución aproximada de Dalenius y Hodges (1959) a las ecuaciones de Dalenius (1950). De acuerdo con Gunning y Horgan (2004), el límite superior de cada estrato se determinó con la siguiente expresión:  
+
+$$Q = \frac{1}{L}\sum^{J}_{i=1}{\sqrt{f_{i}}}$$
+
+Sea un conjunto de estratos determinados por su límite superior,
+
+ $$Q,\ 2Q,\ \ldots,\ \left(L-1\right)Q,\ (L)Q.$$
+donde:  
+
+$\circ \:J$: es el número de clases dentro del grupo de la variable ordenada X,    
+$\circ \:f_{i}\ \in(1,\ \ldots, J)$: es la frecuencia en cada clase  $J$, y  
+$\circ \:L$: es el número de estratos.   
+
+
+La eficiencia del método de la raíz de las frecuencias acumuladas depende principalmente del número de clases dentro del grupo de la variable ordenada. Sin embargo, no hay un procedimiento estándar sobre cómo elegir el mejor valor para el número de clases, siendo esto una limitante del método de Dalenius y Hodges. Para medir el efecto del número  de clases en la varianza de cada estrato se recurrió a un método iterativo para obtener un criterio de agrupación óptimo.    
+
+Para establecer los límites de los estratos $(b_{1},\ \ldots,\ b_{L})$ que minimicen la varianza del estimador, se utiliza la asignación de Neyman para determinar el tamaño de muestra óptimo. Sea la varianza del estimador:    
+
+$$V\left({\bar{x}}_{st}\right)=\ \sum_{h}\left(\frac{N_h}{N}\right)^2\frac{S_h^2}{n_h}\ $$
+donde:
+
+$\circ  \: S_{h}^{2}$: es la varianza poblacional en el estrato $h$,   
+$\circ  \:n_{h}$: es el tamaño de muestra en el estrato $h$ utilizada por la asignación de Neyman, y 
+$\circ  \:N_{h}$: es el total de elementos en el estrato $h$, sea $N=\sum_{h=1}^{L}{N_{h}}$.     
+
+Si se asume que la distribución dentro de cada estrato se distribuye aproximadamente de manera uniforme, los límites se obtienen tomando intervalos iguales en la función de la raíz de las frecuencias acumuladas. Los límites se resuelven de manera iterativa:   
+
+$$\frac{S_h^2+(b_h-{\bar{X}}_h)2}{S_h}=\frac{S_{h+1}^2+(b_h-{\bar{X}}_{h+1})2}{S_{h+1}}\ para\ h=1,\ \ldots.\ ,\ L-1$$
+donde:
+
+$\circ  \: b_{h}$: es el límite superior en el estrato $h$,   
+$\circ  \: {\bar{X}}_{h}$: es la media poblacional en el estrato $h$, y   
+$\circ  \: S_{h}^{2}$: es la varianza poblacional en el estrato $h$.      
+
+El requisito de precisión, generalmente se establece cuando el coeficiente de variación sea igual a un nivel especificado entre 1 y 10 por ciento (Hidiroglou y Kozak, 2018).     
+
+## Número óptimo de clases del método de Dalenius & Hodge {-}  
+
+`alloc` lista que especifica el esquema de asignación. La lista debe contener 3 números para los 3 exponentes q1, q2 y q3 en el esquema de asignación general (ver paquete de `stratification`). El valor predeterminado es la asignación de **Neyman** (q1 = q3 = 0.5 y q2 = 0)   
+
+```{r}
+start.time <- Sys.time()
+DH_Entidad <- list()
+stderr <- list()
+mean <- list()
+var <- list()
+for(j in 1:3){
+i <- 1
+  sd <- matrix(NA, nrow = 28, ncol = 3)
+  meanh <- matrix(NA, nrow = 28, ncol = 6)
+  varh <- matrix(NA, nrow = 28, ncol = 6)
+ for(n in seq(5, nrow(get(paste0("DP2_", tablas[j]))), 1)){
+      DH_Entidad[[paste(tablas[j])]][[n]] <- strata.cumrootf(x = get(paste0("DP2_", tablas[j]))[,14], CV = 0.05, Ls = 5, alloc = c(0.5, 0, 0.5), nclass = n)
+      cum <- DH_Entidad[[paste(tablas[j])]][[n]]
+      sd[i,] <-  c(n, cum$stderr, cum$CV)
+      meanh[i,] <- c(n, cum$meanh)
+      varh[i,] <-  c(n, cum$varh)
+      i <- i + 1
+}
+  stderr[[j]] <- sd
+  mean[[j]] <- meanh
+  var[[j]] <- varh
+}
+
+for(i in 1:3){
+  colnames(stderr[[i]]) <- c("n", "sderr", "CV")
+}
+
+end.time <- Sys.time()
+time.taken <- round(end.time - start.time, 2)
+time.taken
+```
+
+
+#### Número óptimo de clases {-}
+
+```{r}
+min.strata <- NULL
+for(i in 1:3){
+  min.strata[[i]] <- stderr[[i]] %>%
+                      as.data.frame() %>% 
+                       slice(which.min(.$CV))
+}
+```
+
+```{r, echo = FALSE}
+tabla <- do.call(rbind.data.frame, min.strata) %>%
+          dplyr::mutate(ANIO = tablas) %>%
+           relocate(ANIO, .before = "n")
+
+tabla %>% 
+ rename("AÑO" = "ANIO") %>%
+  gt() %>%
+   tab_header(title = "Número óptimo de clases") %>%
+    fmt_integer(columns = names(tabla)[2]) %>%
+     fmt_number(columns = names(tabla)[3:4],
+                decimals = 2) %>%
+       tab_options(heading.title.font.size = 12, 
+                   heading.subtitle.font.size = 10,
+                   table.font.names = 'Montserrat Medium',
+                   table.align = "center",
+                   table.font.size = 8) %>%
+        tab_style(style = list(cell_text(align = "left",
+                                          weight = 'bold')),
+                   locations = list(cells_title(groups = c("title")))) %>%
+         tab_style(style = list(cell_text(align = "left")),
+                    locations = list(cells_title(groups = c("subtitle")))) %>%
+          cols_label(AÑO = md("**AÑO**"),
+                     n = md("**n**"),
+                     sderr = md("**sd**"),
+                     CV = md("**C.V.**")) %>%
+           as_raw_html() 
+```
+
+
+
+```{r, echo = FALSE, results=FALSE, out.width='80%'}
+p <- NULL
+for(i in 1:3) {
+p[[i]] <- stderr[[i]] %>%
+           as.data.frame() %>%
+            arrange(desc(.$CV)) %>%
+             ggplot() + 
+              geom_point(aes(x = seq(1:(nrow(get(paste0("DP2_",tablas[i]))) - 4)), y = CV)) +  
+               geom_line(aes(x = seq(1:(nrow(get(paste0("DP2_",tablas[i]))) - 4)), y = CV)) +
+                geom_text(data = min.strata[[i]], aes(label = paste0("CV = ", round(CV, 4)), x = 5, y = CV),  
+                           vjust = -1,
+                            size = 6,
+                             color = "red",
+                              family = "montserrat") +
+                  geom_hline(data = min.strata[[i]], aes(yintercept = CV), color = "red") +
+                   theme_minimal() + 
+                    theme(title = element_text(family = "montserrat"), 
+                          plot.title = element_text(size = 22, family = "montserrat"),
+                          plot.subtitle = element_text(size = 20, family = "montserrat"),
+                          axis.text = element_text(size = 14, family = "montserrat"),
+                          axis.title = element_text(size = 18, family = "montserrat")) + 
+                     scale_y_continuous(labels = scales::number_format(accuracy = 0.01)) +
+                 labs(title = "Coeficiente de variación óptimo",
+                       subtitle = paste(tablas[i]),
+                        y = "CV", 
+                         x = "iteraciones") 
+}
+p[[3]]
+```
+
+
+Se toman en cuenta el número de clases que salen del los resultados del método iterativo. 
+
+```{r}
+for(i in 1:3){
+  assign(paste0("strata.DP2_",tablas[i]), strata.cumrootf(get(paste0("DP2_",tablas[i]))[,14],
+                                                           CV = 0.05,
+                                                            Ls = 5,
+                                                             alloc = c(0.5, 0, 0.5), 
+                                                              nclass = min.strata[[i]][,1]))
+}
+```
+
+Se agregan los datos a la base original
+
+```{r}
+##Se agrega a la base DP2
+for(i in 1:3){
+  assign(paste0("DP2_",tablas[i]), data.frame(get(paste0("DP2_", tablas[i])),
+                                               get(paste0("strata.DP2_", tablas[i]))[["stratumID"]]))
+}
+
+# Se cambian los nombres de las columnas 
+for(i in 1:3){
+  columns = get(paste0("DP2_",tablas[i]))
+  colnames(columns) = c("CVE_ENT", "NOM_ENT", "POB_TOT", "ANIO",
+                        "ANALF", "SBASC", "OVSDE", "OVSEE", "OVSAE", "VHAC", "OVPT", "PL.5000", "PO2SM",
+                        paste0("IM_",tablas[i]), paste0("GM_",tablas[i]))
+  assign(paste0("DP2_",tablas[i]), columns)
+  rm(columns)
+}
+
+# Se cambian los levels a los grados de marginación correspondientes
+for(i in tablas){
+  niveles = get(paste0("DP2_",i)) 
+  levels(niveles[,15]) = c("Muy alto", "Alto", "Medio", "Bajo", "Muy bajo")
+  assign(paste0("DP2_",i), niveles)
+}
+```
+
+
+### Límites de los estratos {-}
+
+```{r}
+limites <- data.frame("2010" = c(min(DP2_2010$IM_2010), strata.DP2_2010$bh, max(DP2_2010$IM_2010)),
+                      "2015" = c(min(DP2_2015$IM_2015), strata.DP2_2015$bh, max(DP2_2015$IM_2015)),
+                      "2020" = c(min(DP2_2020$IM_2020), strata.DP2_2020$bh, max(DP2_2020$IM_2020)))
+```
+
+
+```{r, echo = FALSE}
+tabla <- limites %>%
+          t()  %>%
+           as.data.frame() %>%
+            mutate_if(is.numeric, round, digits = 2) %>%
+             tibble::rownames_to_column(.data = .) %>% 
+              mutate(ANIO = c("2010", "2015", "2020"),
+                     `Muy alto` = paste("[", V1, "-", V2, "]"),
+                     `Alto` = paste("(", V2, "-", V3, "]"),
+                     `Medio` = paste("(", V3, "-", V4, "]"),
+                     `Bajo` = paste("(", V4, "-", V5, "]"),
+                     `Muy bajo` = paste("(", V5, "-", V6, "]")) %>%
+               select(., c(8:13))
+
+tabla %>% 
+ rename("AÑO" = "ANIO") %>%
+  gt(rowname_col = c("AÑO")) %>%
+   tab_header(title = "Límite de los estratos") %>%
+    tab_options(heading.title.font.size = 12, 
+                heading.align = "center",
+                heading.subtitle.font.size = 10,
+                table.align = "center",
+                table.font.names = 'Montserrat Medium',
+                table.font.size = 8) %>%
+     tab_style(style = list(cell_text(align = "center",
+                                       weight = 'bold')),
+                locations = list(cells_title(groups = c("title")))) %>%
+      cols_label(AÑO = md("**AÑO**"), 
+                 `Muy alto` = md("**Muy alto**"),
+                 `Alto` = md("**Alto**"),
+                 `Medio` = md("**Medio**"),
+                 `Bajo` = md("**Bajo**"),
+                 `Muy bajo` = md("**Muy bajo**")) %>%
+      as_raw_html() 
+```
+
+

@@ -1,0 +1,76 @@
+# Base de datos {.unlisted .unnumbered}
+
+
+Se definen los años que se van a analizar a los índices de marginación.   
+
+Aquí se define un vector llamado `tablas` que contiene los años `2010`, `2015` y `2020` como cadenas de texto. Este vector se utilizará para iterar y cargar las bases de datos correspondientes a esos años. 
+
+**Definición de tablas**   
+
+```{r}
+tablas <- c("2010", "2015", "2020")
+```
+
+**Se carga la base de datos para los 3 años**  
+
+ Dentro del iterador `for()`, para cada año se construye el nombre del archivo de datos:    
+
+- Obtención de la tabla: `get(paste0("tabla_",i))` obtiene la tabla cargada previamente (donde el nombre de cada tabla cargada es `tabla_2010`, `tabla_2015`, etc.).    
+- Renombrado de la columna: `rename("ANIO" = "AÑO")` cambia el nombre de la columna AÑO a `ANIO`.   
+- Filtrado de datos: `filter(NOM_ENT != "Nacional")` elimina las filas donde la columna `NOM_ENT` tiene el valor "Nacional".    
+- Conversión de la columna a factor: `dplyr::mutate(ANIO = as.factor(.$ANIO))` convierte la columna `ANIO` en un factor.     
+
+```{r}
+for(i in tablas){
+load(file = paste0(here::here(),"/Bases/IME_", i, ".RData"))
+}
+
+##Se cambia el nombre de la columna AÑO, para evitar problemas de puntuación
+## Se cambia la variable año a factor
+for(i in tablas){
+assign(paste0("tabla_",i), get(paste0("tabla_",i)) %>% 
+                            rename("ANIO" = "AÑO") %>%
+                             filter(NOM_ENT != "Nacional") %>%
+                              dplyr::mutate(ANIO = as.factor(.$ANIO)))
+}
+```
+
+
+<div style="height:700px;overflow:auto;">
+```{r, echo = FALSE}
+require(gt)
+tabla_2020 %>% 
+ rename("AÑO" = "ANIO") %>%
+  gt() %>%
+   tab_header(title = "Indicadores simples de marginación",
+               subtitle = "2020") %>%
+    fmt_number(columns = names(tabla_2020)[5:13], 
+                decimals = 2) %>%
+     fmt_integer(columns = "POB_TOT", 
+                  sep_mark = " ") %>%
+      tab_options(heading.title.font.size = 12, 
+                  heading.subtitle.font.size = 10,
+                  table.font.names = 'Montserrat Medium',
+                  table.font.size = 8,
+                  data_row.padding = px(1)) %>%
+       tab_style(style = list(cell_text(align = "left",
+                                         weight = 'bold')),
+                  locations = list(cells_title(groups = c("title")))) %>%
+        tab_style(style = list(cell_text(align = "left")),
+                   locations = list(cells_title(groups = c("subtitle")))) %>%
+         cols_label(CVE_ENT = md("**CVE_ENT**"),
+                    NOM_ENT = md("**NOM_ENT**"), 
+                    POB_TOT = md("**POB_TOT**"), 
+                    AÑO = md("**AÑO**"), 
+                    ANALF = md("**ANALF**"),
+                    SBASC = md("**SBASC**"),
+                    OVSDE = md("**OVSDE**"),
+                    OVSEE = md("**OVSEE**"),
+                    OVSAE = md("**OVSAE**"),
+                    VHAC = md("**VHAC**"),
+                    OVPT= md("**OVPT**"),
+                    PL.5000 = md("**PL.5000**"),
+                    PO2SM = md("**PO2SM**")) %>%
+          as_raw_html() 
+```
+</div>

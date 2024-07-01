@@ -1,0 +1,180 @@
+# Método de Distancias $DP2$  {.unlisted .unnumbered}
+
+
+José Bernardo Pena Trapero: `Problemas de la medición del bienestar y conceptos afines (1977)` 
+
+Los métodos de distancias son enfoques utilizados para medir el bienestar o la calidad de vida de las personas a través de la comparación de diferentes dimensiones o indicadores. Estos métodos se basan en la idea de que el bienestar se puede evaluar considerando la distancia o diferencia entre los individuos en términos de ciertos atributos o variables relevantes.   
+La Distancia $DP_{2}$, es un indicador sintético, definido por el profesor `J. Bernardo Pena Trapero`, basado en el concepto de distancia, construido, como su nombre indica para medir distancias entre unidades geográficas, o bien, también se puede aplicar a comparaciones tanto cronológicas como interespaciales.     
+   
+
+**Definición**
+
+Sean:   
+
+$\:\:\circ\:r$, el número de entidades;  
+$\:\:\circ\:n$, el número de variables;  
+$\:\:\circ\:x_{ij}$, el valor de la variable j en la entidad $i$;  
+$\:\:\circ\:\sigma_{j}$, La Desviación Típica de la variable $j$;   
+$\:\:\circ\:R^{2}_{i,i-1,...,1}$ el Coeficiente de Determinación en la Regresión de $X_{i}$ sobre $X_{i-1},X_{i-2},...,X_{1}$. 
+
+Se define la $Distancia-P_{2}$ de la forma:    
+
+\begin{align}
+DP_{2}=\sum^{n}_{i=1}\frac{d_{i}}{\sigma_{i}}(1-R^{2}_{i,i-1,...,1})\:\:;\;\;con \:\:R^{2}_{1}=0
+\end{align}
+
+Donde:     
+
+$\:\:\circ\:d_{i} = d_{i}(r,*) = |x_{ri}-x_{*i}|$ |: es la distancia de la j-ésima variable de la entidad federativa o municipio $r$ con respecto a la base de referencia $x_{*}=(x_{*1}, x_{*2},..., x_{*n})$. Tomando como punto de referencia el valor mínimo de la variable, siendo esta la peor situación teórica,      
+
+ $\:\:\circ\:\sigma_{i}$ : es la desviación estándar de la variable $𝑗$,     
+ 
+ $\:\:\circ\:R^{2}_{i,i-1,...,1}$: es el coeficiente de determinación de la regresión del indicador parcial $𝑗$ con respecto a los otros indicadores $(𝑗−1,𝑗−2,…,1)$. Esta expresión es parte de la varianza del indicador parcial $I_{j}$ que se explica linealmente por el resto de los indicadores parciales,        
+
+$\:\:\circ\:(1-R^{2}_{i,i-1,...,1})$): es el factor corrector que evita la duplicidad, al eliminar la información parcial de los indicadores ya contenidos en los indicadores precedentes, y     
+
+$\:\:\circ\:R^{2}_{1}=0$; porque la primera componente aporta toda la información y al no existir un componente previo su ponderación es la unidad.   
+
+El $DP_{2}$ cumple con las siguientes propiedades: no negatividad, homogeneidad, conmutatividad, desigualdad triangular, existencia y determinación, monotonía, unicidad, transitividad, no duplicidad de información, invariancia al cambio de origen y/o de escala en las unidades y exhaustividad.      
+
+
+El orden de entrada de las variables
+
+```{r}
+# Se multiplica por -1, debido a que son indicadores de carencia 
+for(i in tablas){	
+  assign(paste0("DP2_datos_", i), (-1 * get(paste0("tabla_", i))[5:13])) 
+}
+```
+
+
+## Base de referencia  {-}
+
+Se toma como base de referencia el valor del mínimo del `2010 - 2020`, ya que este tipo de cambio permite la comparabilidad en el tiempo. 
+
+```{r}
+#Base de referencia 2010 - 2020
+for(i in tablas){
+assign(paste0("minRV_", i), setNames(c(-17.9063062676492, # ANALF
+                                       -60.1276776392954, # SBASC
+                                       -19.8442777580699, # OVSDE
+                                       -4.93236362397464, # OVSEE
+                                       -29.7931507393921, # OVSAE
+                                       -53.8984835976862, # VHAC
+                                       -19.6138807443748, # OVPT
+                                       -61.5084790431887, # PL.5000
+                                       -85.5702744072091), # PO2SM
+                                     nm = c("ANALF", "SBASC", "OVSDE", "OVSEE", "OVSAE", "VHAC", "OVPT","PL.5000", "PO2SM")))
+}
+```
+
+
+```{r, echo = FALSE}
+minRV <- minRV_2010 %>%
+          t() %>%
+           as.data.frame() %>%
+            tibble::rownames_to_column(.data = .) %>%
+             dplyr::mutate(rowname = case_when(rowname %in% 1 ~ "2010 - 2020")) %>%
+              rename("ANIO" = "rowname")
+
+minRV %>% 
+ rename("AÑO" = "ANIO") %>%
+  gt() %>%
+   tab_header(title = "Base de referencia") %>%
+    fmt_number(columns = names(tabla_2020)[5:13], 
+               decimals = 2) %>%
+     tab_options(heading.title.font.size = 12, 
+                 heading.align = "center",
+                 heading.subtitle.font.size = 10,
+                 table.align = "center",
+                 table.font.names = 'Montserrat Medium',
+                 table.font.size = 8) %>%
+      tab_style(style = list(cell_text(align = "center",
+                                        weight = 'bold')),
+                locations = list(cells_title(groups = c("title")))) %>%
+       tab_style(style = list(cell_text(align = "left")),
+                  locations = list(cells_title(groups = c("subtitle")))) %>%
+       cols_label(AÑO = md("**AÑO**"), 
+                  ANALF = md("**ANALF**"),
+                  SBASC = md("**SBASC**"),
+                  OVSDE = md("**OVSDE**"),
+                  OVSEE = md("**OVSEE**"),
+                  OVSAE = md("**OVSAE**"),
+                  VHAC = md("**VHAC**"),
+                  OVPT= md("**OVPT**"),
+                  PL.5000 = md("**PL.5000**"), 
+                  PO2SM = md("**PO2SM**")) %>%
+        as_raw_html() 
+```
+
+
+
+## Método de Distancia $DP_{2}$  {-}   
+
+```{r, results=FALSE}
+require(p2distance)
+##Calculo del Método de Distancias DP2
+for(i in tablas){
+assign(paste0("ind_",i), p2distance(matriz = as.matrix(get(paste0("DP2_datos_", i))), 
+                                     reference_vector = get(paste0("minRV_", i)), 
+                                      iterations = 50))
+}
+```
+
+**Total de iteraciones**
+
+```{r, collapse=TRUE}
+iteration <- lapply(1:3, function(x) get(paste0("ind_", tablas[x]))[["iteration"]])
+```
+
+
+```{r, echo=FALSE}
+tabla <- do.call(rbind, iteration) %>%
+                  as.data.frame() %>%
+                   tibble::rownames_to_column(.data = .) %>%
+                    dplyr::mutate(rowname = case_when(rowname %in% 1 ~ "2010",
+                                                      rowname %in% 2 ~ "2015",
+                                                      rowname %in% 3 ~ "2020")) %>%
+                     rename("ANIO" = "rowname")
+
+tabla %>% 
+ rename("AÑO" = "ANIO") %>%
+  gt() %>%
+   tab_header(title = "Número de iteraciones") %>%
+    fmt_integer(columns = "V1") %>%
+     tab_options(heading.title.font.size = 12, 
+                 heading.subtitle.font.size = 10,
+                 table.font.names = 'Montserrat Medium',
+                 table.align = "center",
+                 table.font.size = 8,
+                 data_row.padding = px(1)) %>%
+      tab_style(style = list(cell_text(align = "left",
+                                        weight = 'bold')),
+                 locations = list(cells_title(groups = c("title")))) %>%
+       tab_style(style = list(cell_text(align = "left")),
+                  locations = list(cells_title(groups = c("subtitle")))) %>%
+        cols_label(AÑO = md("**AÑO**"), 
+                    V1 = md("**Iteraciones**")) %>%
+         as_raw_html() 
+```
+
+
+
+
+Se anexan los resultados a las bases de datos original
+
+```{r}
+for(i in tablas){
+assign(paste0("DP2_",i), cbind(get(paste0("tabla_",i)), get(paste0("ind_",i))[["p2distance"]]))
+}
+
+# Se cambian los nombres de las columnas 
+for(i in 1:3){
+  columns = get(paste0("DP2_",tablas[i]))
+  colnames(columns) = c("CVE_ENT", "NOM_ENT", "POB_TOT", "ANIO",
+                        "ANALF", "SBASC", "OVSDE", "OVSEE", "OVSAE", "VHAC", "OVPT", "PL.5000", "PO2SM",
+                        paste0("IM_", tablas[i]))
+  assign(paste0("DP2_",tablas[i]), columns)
+  rm(columns)
+}
+```

@@ -1,0 +1,141 @@
+# Índice normalizado  {.unlisted .unnumbered}
+
+Otra forma de apreciar el índice de marginación es normalizando sus valores para ver objetivamente la evolución de cada unidad territorial (Somarriba et al. 2013). La normalización se realiza utilizando un cambio de escala conocido como normalización mínima-máxima. Con este procedimiento el índice de marginación se escala a valores relativos con un rango de entre cero y uno, lo cual permite su comparación numérica y le da una propiedad adicional al índice de marginación. Al mismo tiempo, la normalización determina el mismo sentido que el índice obtenido por el método DP2, donde los valores cercanos a cero implican mayor marginación.  
+
+El proceso de normalización consiste en:
+
+$${DP}_2normalizado=\frac{{DP}_2^i-\min({DP}_2)}{\max({DP}_2)-\min({DP}_2)},$$
+donde:
+
+$\circ \: {DP}_{2}^{i}$: es el valor del índice de marginación del estado o municipio $i$,   
+$\circ \: min ({DP}_{2})$: es el valor mínimo o peor escenario que puede tomar el índice, y   
+$\circ \: max ({DP}_{2})$: es el valor máximo u objetivo que puede tomar el índice.  
+
+
+## Desviación estándar de los indicadores simples  {-}
+
+**Varianza muestral insesgada**    
+**Estimado insesgado de la varianza poblacional**      
+
+$$s^{2} = \frac{1}{n-1}\left(x_{i}-\bar{x}\right)^{2} = \frac{\sum_{i=1}^{n}(x_{i}^{2})}{n-1} - \frac{\sum_{i=1}^{n}(x_{i})^{2}}{(n-1)\: n } = \left(\frac{n-1}{n}\right)s_{n}^{2} $$
+
+```{r}
+# Desviación estándar de los indicadores
+desvest <- NULL
+for(i in 1:3){
+desvest[[i]] <- as.matrix(apply(get(paste0("DP2_", tablas[i]))[5:13], MARGIN = 2, sd)) %>%
+                 as.data.frame() %>%
+                  rename("desvest" = "V1") %>%
+                   dplyr::mutate(sd_muestral = .$desvest * (sqrt((dim(get(paste0("DP2_",tablas[i]))[5:13])[1] - 1)/dim(get(paste0("DP2_",tablas[i]))[5:13])[1]))) %>%
+                    dplyr::mutate(desvest.inversa = 1/(.$sd_muestral))
+}
+```
+
+
+```{r, echo = FALSE}
+# Tabla
+tabla <- desvest[[3]] %>%
+          tibble::rownames_to_column()
+
+tabla %>%
+ gt() %>%
+  tab_header(title = "Desviación estándar") %>% 
+   tab_options(heading.title.font.size = 12, 
+               heading.align = "center",
+               heading.padding = 5,
+               heading.subtitle.font.size = 10,
+               table.align = "center",
+               table.font.names = 'Montserrat Medium',
+               table.font.size = 8,
+               data_row.padding = px(1)) %>%
+    tab_style(style = list(cell_text(align = "center",
+                                      weight = 'bold')),
+               locations = list(cells_title(groups = c("title")))) %>%
+     cols_label(`desvest` = md("**Desviación estándar**"), 
+                `sd_muestral` = md("**Desviación estándar  muestral**"),
+                `desvest.inversa` = md("**Desviación estandar m. inversa**")) %>%
+      fmt_number(columns = c(1:3), decimals = 3) %>%
+      as_raw_html()
+```
+
+## Escenarios extremos {-}
+
+Para este tipo de cálculo es necesario conocer los puntos más extremos que puede tomar el índice en el año de observación. De antemano, se sabe que cada indicador simple toma valores de cero a 100 y, además, el método DP2 ya proporcionó el orden de entrada de las variables. Usando estos criterios se estiman los puntos focales extremos que puede tomar el índice de marginación. Se sabe que la peor situación es cuando una unidad de análisis toca todos y cada uno de los valores mínimos del vector base de referencia común, esto sería el peor escenario de marginación y tomaría un valor de cero. En sentido contrario, el valor máximo sería la situación con la menor marginación.   
+
+**Escenarios del mínimo y máximo valor en el índice DP2**  
+
+```{r}
+minimo <- NULL
+maximo <- NULL
+## Mínimo valor del DP2
+for(i in 1:3){
+vector_minimo <- minRV_2010  
+tabla <- abs(vector_minimo - minRV_2010) * desvest[[i]][["desvest.inversa"]] *
+          get(paste0("ind_", tablas[i]))[["correction_factors"]][names(DP2_2020[5:13])] %>%
+           t() %>%
+            as.data.frame() 
+minimo[[i]] <- data.frame(AÑO = paste(tablas[i]), Escenario = "Mínimo", tabla, DP2 = rowSums(tabla))
+  
+## Máximo valor del DP2   
+vector_maximo <- rep(0, 9) # Cuando los indicadores valen cero 
+tabla <- abs(vector_maximo - minRV_2010) * desvest[[i]][["desvest.inversa"]] *
+          get(paste0("ind_", tablas[i]))[["correction_factors"]][names(DP2_2020[5:13])] %>%
+           t() %>%
+            as.data.frame() 
+
+maximo [[i]] <- data.frame(AÑO = paste(tablas[i]), Escenario = "Máximo", tabla, DP2 = rowSums(tabla))
+}
+```
+
+
+## Índice normalizado {-}
+
+**Se guarda la base de datos con el índice normalizado**  
+
+```{r}
+for(i in 1:3){
+min_DP2 <- minimo[[i]][["DP2"]]
+max_DP2 <- maximo[[i]][["DP2"]]
+assign(paste0("DP2_",tablas[i]), get(paste0("DP2_", tablas[i])) %>%
+                                  dplyr::mutate(IMN = (get(paste0("IM_", tablas[i])) - min_DP2)/(max_DP2 -  min_DP2)))
+}
+```
+
+
+::: {style="height:700px;overflow:auto;"}
+```{r, echo=FALSE}
+#Tabla final
+DP2_2020 %>% 
+ rename("AÑO" = "ANIO") %>%
+  gt() %>%
+   tab_header(title = "Índice de marginación a nivel estatal 2020") %>%
+    tab_options(heading.title.font.size = 12, 
+                heading.align = "center",
+                heading.subtitle.font.size = 10,
+                table.align = "center",
+                column_labels.font.weight = "bold",
+                table.font.names = 'Montserrat Medium',
+                table.font.size = 9,
+                data_row.padding = px(1)) %>%
+     tab_style(style = list(cell_text(align = "center",
+                                       weight = 'bold')),
+                locations = list(cells_title(groups = c("title")))) %>%
+      fmt_integer(columns = "POB_TOT", sep_mark = " ") %>%
+       fmt_number(columns = c(5:13), decimals = 1) %>%
+        fmt_number(columns = c(14, 16), decimals = 3) %>%
+         cols_width(starts_with("POB") ~ px(100), 
+                    starts_with("NOM") ~ px(200), 
+                    everything() ~ px(60)) %>%
+          cols_label(IMN = md("IMN_2020")) %>%
+           as_raw_html()
+```
+:::
+
+<\br>
+```{r, eval = FALSE}
+#Tabla final
+for(i in tablas){
+save(get(paste0("DP2_",i)), file = paste0(here::here(), "/Output/IME_", i, ".RData"))
+}
+```
+
