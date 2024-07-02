@@ -1,0 +1,130 @@
+--- 
+title: "Índice de marginación a nivel estatal 2010 - 2020"
+author: "Diana Villasana Ocampo"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography: [book.bib, packages.bib]
+url: https://github.com/dvillasanao/IME_2010_2020
+cover-image: https://raw.githubusercontent.com/mxabierto/assets/master/img/logos/conapo.png
+description: |
+  This is a minimal example of using the bookdown package to write a book.
+  The HTML output format for this example is bookdown::bs4_book,
+  set in the _output.yml file.
+biblio-style: apalike
+csl: chicago-fullnote-bibliography.csl
+---
+
+# Índice de marginación a nivel estatal  {.unlisted .unnumbered}
+
+Placeholder
+
+
+
+<!--chapter:end:index.Rmd-->
+
+
+# Indicadores simples  {.unlisted .unnumbered}  
+
+Placeholder
+
+
+### Porcentaje de población analfabeta de 15 años o más $(I_{1}^{i})$ {-}
+### 	Porcentaje de población de 15 años o más sin educación básica $(I_{2}^{i})$ {-}
+### Porcentaje de ocupantes en viviendas particulares sin drenaje ni sanitario $(I_{3}^{i})$ {-} 
+### Porcentaje de ocupantes en viviendas particulares sin energía eléctrica $(I_{4}^{i})$ {-}
+### Porcentaje de ocupantes en viviendas particulares sin agua entubada $(I_{5}^{i})$ {-}     
+### Porcentaje de ocupantes en viviendas particulares con piso de tierra $(I_{6}^{i})$ {-} 
+### Porcentaje de ocupantes en viviendas particulares con hacinamiento $(I_{7}^{i})$ {-}  
+### Porcentaje de población en localidades con menos de cinco mil habitantes $(I_{8}^{i})$ {-}  
+### Porcentaje de población ocupada con ingresos de hasta dos salarios mínimos $(I_{9}^{i})$ {-} 
+
+<!--chapter:end:01-Indicadores.Rmd-->
+
+
+# Base de datos {.unlisted .unnumbered}
+
+Placeholder
+
+
+
+<!--chapter:end:02-Datos.Rmd-->
+
+
+# Análisis de correlaciones  {.unlisted .unnumbered}
+
+Placeholder
+
+
+
+<!--chapter:end:03-Correlaciones.Rmd-->
+
+
+# Método de Distancias $DP2$  {.unlisted .unnumbered}
+
+Placeholder
+
+
+## Base de referencia  {-}
+## Método de Distancia $DP_{2}$  {-}   
+
+<!--chapter:end:04-Distancias.Rmd-->
+
+
+# Método de estratificación  {.unlisted .unnumbered}
+
+Placeholder
+
+
+### Método de estratificación de Dalenius & Hodges {-}
+## Número óptimo de clases del método de Dalenius & Hodge {-}  
+#### Número óptimo de clases {-}   
+### Límites de los estratos {-}   
+
+<!--chapter:end:05-Estratificacion.Rmd-->
+
+
+# Índice normalizado  {.unlisted .unnumbered}
+
+Placeholder
+
+
+## Desviación estándar de los indicadores simples  {-}
+## Escenarios extremos {-}
+## Índice normalizado {-}
+
+<!--chapter:end:06_Normalizacion.Rmd-->
+
+
+# Validación de datos  {.unlisted .unnumbered}
+
+Placeholder
+
+
+## Orden de entrada de las variables  {-}
+## Coeficiente de correlación {-}  
+## Factor de corrector  {-}
+## Coeficiente de Discriminación  {-}
+## “Cantidad de Información Global de Ivanovic Pena Relativa Individual” {-}
+
+<!--chapter:end:07-Validacion.Rmd-->
+
+
+# Resumen {.unlisted .unnumbered}
+
+Placeholder
+
+
+## Mapa a nivel estatal {.unnumbered}
+## Comparación en el tiempo {.unnumbered}
+
+<!--chapter:end:08-Resumen.Rmd-->
+
+
+# Referencias  {.unlisted .unnumbered}
+
+Placeholder
+
+
+
+<!--chapter:end:09-Bibliografias.Rmd-->
+
