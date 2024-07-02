@@ -107,11 +107,11 @@ tabla %>%
     fmt_integer(columns = names(tabla)[2]) %>%
      fmt_number(columns = names(tabla)[3:4],
                 decimals = 2) %>%
-       tab_options(heading.title.font.size = 12, 
-                   heading.subtitle.font.size = 10,
-                   table.font.names = 'Montserrat Medium',
+       tab_options(heading.title.font.size = 14, 
+                   heading.subtitle.font.size = 12,
+                   table.font.names = "Century Gothic",
                    table.align = "center",
-                   table.font.size = 8) %>%
+                   table.font.size = 10) %>%
         tab_style(style = list(cell_text(align = "left",
                                           weight = 'bold')),
                    locations = list(cells_title(groups = c("title")))) %>%
@@ -139,14 +139,14 @@ p[[i]] <- stderr[[i]] %>%
                            vjust = -1,
                             size = 6,
                              color = "red",
-                              family = "Montserrat Medium") +
+                              family = "Century Gothic") +
                   geom_hline(data = min.strata[[i]], aes(yintercept = CV), color = "red") +
                    theme_minimal() + 
-                    theme(title = element_text(family = "Montserrat Medium"), 
-                          plot.title = element_text(size = 22, family = "Montserrat Medium"),
-                          plot.subtitle = element_text(size = 20, family = "Montserrat Medium"),
-                          axis.text = element_text(size = 14, family = "Montserrat Medium"),
-                          axis.title = element_text(size = 18, family = "Montserrat Medium")) + 
+                    theme(title = element_text(family = "Century Gothic"), 
+                          plot.title = element_text(size = 22, family = "Century Gothic"),
+                          plot.subtitle = element_text(size = 20, family = "Century Gothic"),
+                          axis.text = element_text(size = 14, family = "Century Gothic"),
+                          axis.title = element_text(size = 18, family = "Century Gothic")) + 
                      scale_y_continuous(labels = scales::number_format(accuracy = 0.01)) +
                  labs(title = "Coeficiente de variación óptimo",
                        subtitle = paste(tablas[i]),
@@ -155,10 +155,11 @@ p[[i]] <- stderr[[i]] %>%
 }
 ```
 
+<a href="/img/iteraciones.png" data-lightbox="image-1" data-title="iteraciones">
 ```{r, echo = FALSE, fig.width=12, fig.height=12, out.width='100%'}
 knitr::include_graphics(paste0(here::here(), "/img/iteraciones.png"))
 ```
-
+</a>
 
 Se toman en cuenta el número de clases que salen del los resultados del método iterativo. Utilizando la función `strata.cumrootf()` de la paquetería `stratification` con parámetros específicos y el número de clases (`nclass`) obtenido de `min.strata`.       
 - `CV = 0.05`: Establece el coeficiente de variación.   
@@ -236,12 +237,12 @@ tabla %>%
  rename("AÑO" = "ANIO") %>%
   gt(rowname_col = c("AÑO")) %>%
    tab_header(title = "Límite de los estratos") %>%
-    tab_options(heading.title.font.size = 12, 
+    tab_options(heading.title.font.size = 14, 
                 heading.align = "center",
-                heading.subtitle.font.size = 10,
+                heading.subtitle.font.size = 12,
                 table.align = "center",
-                table.font.names = 'Montserrat Medium',
-                table.font.size = 8) %>%
+                table.font.names = 'Century Gothic',
+                table.font.size = 10) %>%
      tab_style(style = list(cell_text(align = "center",
                                        weight = 'bold')),
                 locations = list(cells_title(groups = c("title")))) %>%

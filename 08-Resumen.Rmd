@@ -1,5 +1,7 @@
 # Resumen {.unlisted .unnumbered}
 
+El índice de marginación permite clasificar las entidades federativas según el impacto global de las carencias que sufre la población debido a la falta de acceso a la educación, la residencia en viviendas inadecuadas, los bajos ingresos monetarios y la falta de servicios de salud, equipamientos e infraestructura adecuada en las localidades. Estas condiciones crean una estructura precaria de oportunidades que obstruye el pleno desarrollo del potencial humano.
+
 ```{r, echo = FALSE}
 for(i in tablas){
 load(file = paste0(here::here(), "/Output/IME_", i, ".RData"))
@@ -22,11 +24,11 @@ tabla <- p %>%
 tabla %>% 
  gt() %>%
   tab_header(title = "Nacional: Población y unidades geograficas según el índice de marginación, 2010-2020") %>%
-   tab_options(heading.title.font.size = 12, 
-               heading.subtitle.font.size = 10,
-               table.font.names = "Montserrat Medium",
+   tab_options(heading.title.font.size = 14, 
+               heading.subtitle.font.size = 12,
+               table.font.names = "Century Gothic",
                table.align = "center",
-               table.font.size = 8,
+               table.font.size = 10,
                data_row.padding = px(1)) %>%
      tab_style(style = list(cell_text(align = "left",
                                       weight = 'bold')),
@@ -51,8 +53,6 @@ tabla %>%
                     columns = c(6:7)) %>%
          as_raw_html() 
 ```
-
-El índice de marginación permite clasificar las entidades federativas según el impacto global de las carencias que sufre la población debido a la falta de acceso a la educación, la residencia en viviendas inadecuadas, los bajos ingresos monetarios y la falta de servicios de salud, equipamientos e infraestructura adecuada en las localidades. Estas condiciones crean una estructura precaria de oportunidades que obstruye el pleno desarrollo del potencial humano.
 
 La tabla presenta una comparación temporal del grado de marginación a nivel estatal en México, desagregada por el grado de marginación para los años 2010, 2015 y 2020.
 
@@ -84,6 +84,8 @@ p
 
 ## Comparación en el tiempo {.unnumbered}
 
+<a href="/img/Mapas_2010_2020.png" data-lightbox="image-1" data-title="Mapas">
 ```{r, echo=FALSE, out.width='100%'}
 knitr::include_graphics(paste0(here::here(), "/img/Mapas_2010_2020.png"))
 ```
+</a>

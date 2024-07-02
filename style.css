@@ -24,8 +24,8 @@ pre code {
 }
 body {
   text-align: justify;
-  font-size: 12px;
-  font-family: "Montserrat";
+  font-size: 14px;
+  font-family: "Century Gothic";
 }
 h1 { /* Header 1 */
   font-size: 28px;
@@ -35,7 +35,7 @@ h1 { /* Header 1 */
 h2 { /* Header 2 */
   font-size: 20px;
   font-weight: bold;
-  font-family: "Montserrat";
+  font-family: "Century Gothic";
   color: #030727;
 }
 h3 { /* Header 3 */
@@ -44,18 +44,18 @@ h3 { /* Header 3 */
 }
 .header-section-number::after {
   content: ".";
-  padding-right: 12px;
+  padding-right: 14px;
 }
 /* Menu lateral*/
 .navbar-nav .navbar-link .navbar-link active 
 {
-  font-family: "Montserrat";
+  font-family: "Century Gothic";
   color:grey;
   font-size: 100px;
   margin: 2px;
 }
 .sidebar {
-    font-size: 10px;
+    font-size: 12px;
     max-width: 100%;
 }
 .sidebar h1 {
@@ -66,3 +66,5 @@ h3 { /* Header 3 */
     font-size: 0.7rem;
     line-height: 1.5;
 }
+/*https://lokeshdhakar.com/projects/lightbox2/*/
+<link href="/lightbox.css" rel="stylesheet" />

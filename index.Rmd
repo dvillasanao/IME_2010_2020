@@ -60,7 +60,7 @@ require(showtext)
 library(extrafont)
 # activar showtext
 windowsFonts()
-#Montserrat Medium
+#Century Gothic
 ```
 
 
@@ -127,11 +127,11 @@ tabla <- p %>%
 tabla %>% 
  gt() %>%
   tab_header(title = "Nacional: Población y unidades geograficas según el grado de marginación, 2010-2020") %>%
-   tab_options(heading.title.font.size = 12, 
-               heading.subtitle.font.size = 10,
-               table.font.names = 'Montserrat Medium',
+   tab_options(heading.title.font.size = 14, 
+               heading.subtitle.font.size = 12,
+               table.font.names = 'Century Gothic',
                table.align = "center",
-               table.font.size = 8,
+               table.font.size = 10,
                data_row.padding = px(1)) %>%
      tab_style(style = list(cell_text(align = "left",
                                       weight = 'bold')),

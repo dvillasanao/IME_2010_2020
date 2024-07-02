@@ -28,12 +28,12 @@ colnames(Variables_sort) <- c("2010", "2015", "2020")
 Variables_sort %>%
  gt() %>%
   tab_header(title = "Variables sort") %>%
-   tab_options(heading.title.font.size = 12, 
+   tab_options(heading.title.font.size = 14, 
                heading.align = "center",
-               heading.subtitle.font.size = 10,
+               heading.subtitle.font.size = 12,
                table.align = "center",
-               table.font.names = 'Montserrat Medium',
-               table.font.size = 8,
+               table.font.names = "Century Gothic",
+               table.font.size = 10,
                data_row.padding = px(1)) %>%
     tab_style(style = list(cell_text(align = "center",
                                       weight = 'bold')),
@@ -64,12 +64,12 @@ colnames(cor.coeff) <- c("Ind_2010", "2010", "Ind_2015", "2015", "Ind_2020", "20
 cor.coeff %>%
   gt() %>%
    tab_header(title = "Correlation Coefficient") %>%
-    tab_options(heading.title.font.size = 12, 
+    tab_options(heading.title.font.size = 14, 
                 heading.align = "center",
-                heading.subtitle.font.size = 10,
+                heading.subtitle.font.size = 12,
                 table.align = "center",
-                table.font.names = 'Montserrat Medium',
-                table.font.size = 8,
+                table.font.names = "Century Gothic",
+                table.font.size = 10,
                 data_row.padding = px(1)) %>%
       tab_style(style = list(cell_text(align = "center",
                                        weight = 'bold')),
@@ -80,7 +80,8 @@ cor.coeff %>%
                   `2015` = md("**2015**"), 
                   `Ind_2020` = md("**Ind**"),
                   `2020` = md("**2020**")) %>%
-        as_raw_html()                          
+        fmt_number(columns = c(2 ,4, 6), decimals = 3) %>%
+         as_raw_html()                          
 ```
 
 ## Factor de corrector  {-}
@@ -105,12 +106,12 @@ colnames(correction_factors) <- c("Ind_2010", "2010", "Ind_2015", "2015", "Ind_2
 correction_factors %>%
   gt() %>%
    tab_header(title = "Correction Factors") %>%
-    tab_options(heading.title.font.size = 12, 
+    tab_options(heading.title.font.size = 14, 
                 heading.align = "center",
-                heading.subtitle.font.size = 10,
+                heading.subtitle.font.size = 12,
                 table.align = "center",
-                table.font.names = 'Montserrat Medium',
-                table.font.size = 8,
+                table.font.names = "Century Gothic",
+                table.font.size = 10,
                 data_row.padding = px(1)) %>%
       tab_style(style = list(cell_text(align = "center",
                                        weight = 'bold')),
@@ -121,7 +122,8 @@ correction_factors %>%
                   `2015` = md("**2015**"), 
                   `Ind_2020` = md("**Ind**"),
                   `2020` = md("**2020**")) %>%
-        as_raw_html()                         
+        fmt_number(columns = c(2 ,4, 6), decimals = 4) %>%
+         as_raw_html()                         
 ```
 
 
@@ -156,12 +158,12 @@ colnames(discrimination_coefficient) <- c("Ind_2010", "2010", "Ind_2015", "2015"
 discrimination_coefficient %>%
   gt() %>%
    tab_header(title = "Discrimination Coefficient") %>%
-    tab_options(heading.title.font.size = 12, 
+    tab_options(heading.title.font.size = 14, 
                 heading.align = "center",
-                heading.subtitle.font.size = 10,
+                heading.subtitle.font.size = 12,
                 table.align = "center",
-                table.font.names = 'Montserrat Medium',
-                table.font.size = 8,
+                table.font.names = "Century Gothic",
+                table.font.size = 10,
                 data_row.padding = px(1)) %>%
       tab_style(style = list(cell_text(align = "center",
                                        weight = 'bold')),
@@ -172,7 +174,8 @@ discrimination_coefficient %>%
                   `2015` = md("**2015**"), 
                   `Ind_2020` = md("**Ind**"),
                   `2020` = md("**2020**")) %>%
-        as_raw_html() 
+        fmt_number(columns = c(2 ,4, 6), decimals = 3) %>%
+         as_raw_html() 
 ```
 
 ## “Cantidad de Información Global de Ivanovic Pena Relativa Individual” {-}
@@ -200,12 +203,12 @@ colnames(alpha) <- c("Ind_2010", "2010", "Ind_2015", "2015", "Ind_2020", "2020")
 alpha %>%
   gt() %>%
    tab_header(title = md("Cantidad de Información Global de Ivanovic Pena Relativa Individual")) %>%
-    tab_options(heading.title.font.size = 11, 
+    tab_options(heading.title.font.size = 14, 
                 heading.align = "center",
-                heading.subtitle.font.size = 10,
+                heading.subtitle.font.size = 12,
                 table.align = "center",
-                table.font.names = 'Montserrat Medium',
-                table.font.size = 8,
+                table.font.names = "Century Gothic",
+                table.font.size = 10,
                 data_row.padding = px(1)) %>%
       tab_style(style = list(cell_text(align = "center",
                                        weight = 'bold')),
@@ -216,6 +219,7 @@ alpha %>%
                   `2015` = md("**2015**"), 
                   `Ind_2020` = md("**Ind**"),
                   `2020` = md("**2020**")) %>%
-        as_raw_html() 
+        fmt_number(columns = c(2 ,4, 6), decimals = 3) %>%
+         as_raw_html() 
 ```
 

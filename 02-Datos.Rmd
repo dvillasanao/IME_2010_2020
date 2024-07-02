@@ -1,9 +1,7 @@
 # Base de datos {.unlisted .unnumbered}
 
 
-Se definen los años que se van a analizar a los índices de marginación.   
-
-Aquí se define un vector llamado `tablas` que contiene los años `2010`, `2015` y `2020` como cadenas de texto. Este vector se utilizará para iterar y cargar las bases de datos correspondientes a esos años. 
+Se define un vector llamado `tablas` que contiene los años `2010`, `2015` y `2020` como cadenas de texto. Este vector se utilizará para iterar y cargar las bases de datos correspondientes a esos años. 
 
 **Definición de tablas**   
 
@@ -16,7 +14,7 @@ tablas <- c("2010", "2015", "2020")
  Dentro del iterador `for()`, para cada año se construye el nombre del archivo de datos:    
 
 - Obtención de la tabla: `get(paste0("tabla_",i))` obtiene la tabla cargada previamente (donde el nombre de cada tabla cargada es `tabla_2010`, `tabla_2015`, etc.).    
-- Renombrado de la columna: `rename("ANIO" = "AÑO")` cambia el nombre de la columna AÑO a `ANIO`.   
+- Renombrando de la columna: `rename("ANIO" = "AÑO")` cambia el nombre de la columna AÑO a `ANIO`.   
 - Filtrado de datos: `filter(NOM_ENT != "Nacional")` elimina las filas donde la columna `NOM_ENT` tiene el valor "Nacional".    
 - Conversión de la columna a factor: `dplyr::mutate(ANIO = as.factor(.$ANIO))` convierte la columna `ANIO` en un factor.     
 
@@ -48,10 +46,10 @@ tabla_2020 %>%
                 decimals = 2) %>%
      fmt_integer(columns = "POB_TOT", 
                   sep_mark = " ") %>%
-      tab_options(heading.title.font.size = 12, 
-                  heading.subtitle.font.size = 10,
-                  table.font.names = 'Montserrat Medium',
-                  table.font.size = 8,
+      tab_options(heading.title.font.size = 14, 
+                  heading.subtitle.font.size = 12,
+                  table.font.names = "Century Gothic",
+                  table.font.size = 10,
                   data_row.padding = px(1)) %>%
        tab_style(style = list(cell_text(align = "left",
                                          weight = 'bold')),

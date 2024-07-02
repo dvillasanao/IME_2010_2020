@@ -29,6 +29,11 @@
         $(function() {
             $(".sidebar h2").html("Contenido");
         });
+    </script><script src="/lightbox.js"></script><script>
+    $('img')
+        .wrap(function(index) {
+            return '<a href="'+$(this).attr('src')+'" data-lightbox="image-'+index+'"></a>';
+        });
     </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
@@ -99,7 +104,8 @@
 <span>                                       mar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">2.5</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<div class="inline-figure"><img src="img/correlaciones_2010_2020.png" width="100%"></div>
+<p><a href="img/correlaciones_2010_2020.png" data-lightbox="image-1" data-title="correlaciones">
+<img src="img/correlaciones_2010_2020.png" width="100%"></a></p>
 
 </div>
   <div class="chapter-nav">

@@ -6,16 +6,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Base de datos | Índice de marginación a nivel estatal 2010 - 2020</title>
 <meta name="author" content="Diana Villasana Ocampo">
-<meta name="description" content="Se definen los años que se van a analizar a los índices de marginación. Aquí se define un vector llamado tablas que contiene los años 2010, 2015 y 2020 como cadenas de texto. Este vector se...">
+<meta name="description" content="Se define un vector llamado tablas que contiene los años 2010, 2015 y 2020 como cadenas de texto. Este vector se utilizará para iterar y cargar las bases de datos correspondientes a esos años....">
 <meta name="generator" content="bookdown 0.36 with bs4_book()">
 <meta property="og:title" content="Base de datos | Índice de marginación a nivel estatal 2010 - 2020">
 <meta property="og:type" content="book">
 <meta property="og:url" content="https://github.com/dvillasanao/IME_2010_2020/base-de-datos.html">
 <meta property="og:image" content="https://raw.githubusercontent.com/mxabierto/assets/master/img/logos/conapo.png">
-<meta property="og:description" content="Se definen los años que se van a analizar a los índices de marginación. Aquí se define un vector llamado tablas que contiene los años 2010, 2015 y 2020 como cadenas de texto. Este vector se...">
+<meta property="og:description" content="Se define un vector llamado tablas que contiene los años 2010, 2015 y 2020 como cadenas de texto. Este vector se utilizará para iterar y cargar las bases de datos correspondientes a esos años....">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Base de datos | Índice de marginación a nivel estatal 2010 - 2020">
-<meta name="twitter:description" content="Se definen los años que se van a analizar a los índices de marginación. Aquí se define un vector llamado tablas que contiene los años 2010, 2015 y 2020 como cadenas de texto. Este vector se...">
+<meta name="twitter:description" content="Se define un vector llamado tablas que contiene los años 2010, 2015 y 2020 como cadenas de texto. Este vector se utilizará para iterar y cargar las bases de datos correspondientes a esos años....">
 <meta name="twitter:image" content="https://raw.githubusercontent.com/mxabierto/assets/master/img/logos/conapo.png">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
@@ -28,6 +28,11 @@
     </script><script>
         $(function() {
             $(".sidebar h2").html("Contenido");
+        });
+    </script><script src="/lightbox.js"></script><script>
+    $('img')
+        .wrap(function(index) {
+            return '<a href="'+$(this).attr('src')+'" data-lightbox="image-'+index+'"></a>';
         });
     </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
     
@@ -75,8 +80,7 @@
   </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="base-de-datos" class="section level1 unlisted unnumbered">
 <h1>Base de datos<a class="anchor" aria-label="anchor" href="#base-de-datos"><i class="fas fa-link"></i></a>
 </h1>
-<p>Se definen los años que se van a analizar a los índices de marginación.</p>
-<p>Aquí se define un vector llamado <code>tablas</code> que contiene los años <code>2010</code>, <code>2015</code> y <code>2020</code> como cadenas de texto. Este vector se utilizará para iterar y cargar las bases de datos correspondientes a esos años.</p>
+<p>Se define un vector llamado <code>tablas</code> que contiene los años <code>2010</code>, <code>2015</code> y <code>2020</code> como cadenas de texto. Este vector se utilizará para iterar y cargar las bases de datos correspondientes a esos años.</p>
 <p><strong>Definición de tablas</strong></p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tablas</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2010"</span>, <span class="st">"2015"</span>, <span class="st">"2020"</span><span class="op">)</span></span></code></pre></div>
@@ -85,7 +89,7 @@
 <ul>
 <li>Obtención de la tabla: <code>get(paste0("tabla_",i))</code> obtiene la tabla cargada previamente (donde el nombre de cada tabla cargada es <code>tabla_2010</code>, <code>tabla_2015</code>, etc.).<br>
 </li>
-<li>Renombrado de la columna: <code>rename("ANIO" = "AÑO")</code> cambia el nombre de la columna AÑO a <code>ANIO</code>.<br>
+<li>Renombrando de la columna: <code>rename("ANIO" = "AÑO")</code> cambia el nombre de la columna AÑO a <code>ANIO</code>.<br>
 </li>
 <li>Filtrado de datos: <code>filter(NOM_ENT != "Nacional")</code> elimina las filas donde la columna <code>NOM_ENT</code> tiene el valor “Nacional”.<br>
 </li>
@@ -105,15 +109,15 @@
 <span>                              <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>ANIO <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">.</span><span class="op">$</span><span class="va">ANIO</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 <div style="height:700px;overflow:auto;">
-<div id="jvglbifxmd" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="oqlqrzihgd" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
   
-  <div class="inline-table"><table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false" style="-webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; font-family: 'Montserrat Medium'; display: table; border-collapse: collapse; line-height: normal; margin-left: auto; margin-right: auto; color: #333333; font-size: 8px; font-weight: normal; font-style: normal; background-color: #FFFFFF; width: auto; border-top-style: solid; border-top-width: 2px; border-top-color: #A8A8A8; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #A8A8A8; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3;" bgcolor="#FFFFFF">
+  <div class="inline-table"><table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false" style="-webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; font-family: 'Century Gothic'; display: table; border-collapse: collapse; line-height: normal; margin-left: auto; margin-right: auto; color: #333333; font-size: 10px; font-weight: normal; font-style: normal; background-color: #FFFFFF; width: auto; border-top-style: solid; border-top-width: 2px; border-top-color: #A8A8A8; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #A8A8A8; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3;" bgcolor="#FFFFFF">
 <thead style="border-style: none;">
 <tr class="gt_heading" style="border-style: none; background-color: #FFFFFF; text-align: center; border-bottom-color: #FFFFFF; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3;" bgcolor="#FFFFFF" align="center">
-<td colspan="13" class="gt_heading gt_title gt_font_normal" style="border-style: none; color: #333333; font-size: 12px; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; border-bottom-width: 0; background-color: #FFFFFF; border-bottom-color: #FFFFFF; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; text-align: left; font-weight: bold;" align="left" bgcolor="#FFFFFF">Indicadores simples de marginación</td>
+<td colspan="13" class="gt_heading gt_title gt_font_normal" style="border-style: none; color: #333333; font-size: 14px; padding-top: 4px; padding-bottom: 4px; padding-left: 5px; padding-right: 5px; border-bottom-width: 0; background-color: #FFFFFF; border-bottom-color: #FFFFFF; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; text-align: left; font-weight: bold;" align="left" bgcolor="#FFFFFF">Indicadores simples de marginación</td>
     </tr>
 <tr class="gt_heading" style="border-style: none; background-color: #FFFFFF; text-align: center; border-bottom-color: #FFFFFF; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3;" bgcolor="#FFFFFF" align="center">
-<td colspan="13" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border" style="border-style: none; color: #333333; font-size: 10px; padding-top: 3px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; border-top-color: #FFFFFF; border-top-width: 0; background-color: #FFFFFF; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; font-weight: normal; text-align: left;" align="left" bgcolor="#FFFFFF">2020</td>
+<td colspan="13" class="gt_heading gt_subtitle gt_font_normal gt_bottom_border" style="border-style: none; color: #333333; font-size: 12px; padding-top: 3px; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; border-top-color: #FFFFFF; border-top-width: 0; background-color: #FFFFFF; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; font-weight: normal; text-align: left;" align="left" bgcolor="#FFFFFF">2020</td>
     </tr>
 <tr class="gt_col_headings" style="border-style: none; border-top-style: solid; border-top-width: 2px; border-top-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #D3D3D3; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3;">
 <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="&lt;strong&gt;CVE_ENT&lt;/strong&gt;" style="border-style: none; color: #333333; background-color: #FFFFFF; font-size: 100%; font-weight: normal; text-transform: inherit; border-left-style: none; border-left-width: 1px; border-left-color: #D3D3D3; border-right-style: none; border-right-width: 1px; border-right-color: #D3D3D3; vertical-align: bottom; padding-top: 5px; padding-bottom: 6px; padding-left: 5px; padding-right: 5px; overflow-x: hidden; text-align: right; font-variant-numeric: tabular-nums;" bgcolor="#FFFFFF" valign="bottom" align="right"><strong>CVE_ENT</strong></th>
