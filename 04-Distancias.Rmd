@@ -47,8 +47,12 @@ for(i in tablas){
 }
 ```
 
+Para asegurar las propiedades del indicador sintético, un aumento en los indicadores simples implica un aumento en la carencia de los servicios, lo que implicaría una disminución de la calidad de vida, por lo que se multiplica cada indicador por **-1**, de esta forma, un aumento en la variable supone una mejora en la calidad de vida.    
+
 
 ## Base de referencia  {-}
+
+Se define al valor de referencia para cada uno de los indicadores parciales, con la finalidad de hacer comparaciones entre las diferentes unidades espaciales (Entidades Federativas). Siendo este el valor mínimo de cada indicador simple como referencia, representado como la “situación no deseada”. Como resultado, un valor alto implicaría una distancia alejada con respecto a una situación teórica “situación no deseada”. Por lo tanto $d_{ij}$ mide la distancia entre el indicador parcial $j$ en la entidad $i$ y su valor de referencia.   
 
 Se toma como base de referencia el valor del mínimo del `2010 - 2020`, ya que este tipo de cambio permite la comparabilidad en el tiempo. 
 
@@ -111,6 +115,13 @@ minRV %>%
 
 ## Método de Distancia $DP_{2}$  {-}   
 
+Utilizando paquetería `p2distance`,  se crean objetos con nombres dinámicos (`ind_i`) donde **i** es cada elemento de los años de observación.   
+
+- `p2distance`: Función que calcula las distancias DP2.    
+- `matriz`: Datos de entrada, convertidos a matriz.   
+- `reference_vector`: Vector de referencia para el cálculo de distancias.   
+- `iterations`: Número de iteraciones para el cálculo.   
+
 ```{r, results=FALSE}
 require(p2distance)
 ##Calculo del Método de Distancias DP2
@@ -159,9 +170,7 @@ tabla %>%
 ```
 
 
-
-
-Se anexan los resultados a las bases de datos original
+Se anexan los resultados obtenidos a las bases de datos original  
 
 ```{r}
 for(i in tablas){

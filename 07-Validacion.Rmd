@@ -9,9 +9,10 @@ List_DP2 <- mget(paste0("ind_", tablas))
 }
 ```
 
-## Variables sort {-}
+## Orden de entrada de las variables  {-}
 
-**Se crea un data.frame de acuerdo al orden de importancia de las variables para todos los años**
+**Se crea un data.frame de acuerdo al orden de importancia de las variables para todos los años** 
+Dependiendo del proceso, el `DP2` adoptará diferentes valores. Por lo tanto, es importante que el método de como resultado un orden de entrada único de los indicadores parciales.    
 
 ```{r}
 Variables_sort <- NULL

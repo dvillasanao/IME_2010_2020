@@ -24,7 +24,7 @@ tabla %>%
   tab_header(title = "Nacional: Población y unidades geograficas según el índice de marginación, 2010-2020") %>%
    tab_options(heading.title.font.size = 12, 
                heading.subtitle.font.size = 10,
-               table.font.names = 'montserrat',
+               table.font.names = "Montserrat Medium",
                table.align = "center",
                table.font.size = 8,
                data_row.padding = px(1)) %>%
@@ -72,8 +72,13 @@ La población en el grado de marginación Muy Alto se mantuvo constante en los e
 ## Mapa a nivel estatal {-}
 
 
-```{r, echo=FALSE, out.width='100%', warning=FALSE, message=FALSE}
-p <- readRDS(paste0(here::here(),"/Output/Mapa.rds"))
+```{r, echo=FALSE, out.width='100%', warning=FALSE, message=FALSE, eval = FALSE}
+library(leaflet)
+library(htmlwidgets)
+require(leaflet.extras)
+require(mapview)
+require(leaflet.providers)
+p <- readRDS(paste0(here::here(),"/Output/map_2020.RDS"))
 p 
 ```
 
@@ -82,5 +87,5 @@ p
 
 
 ```{r, echo=FALSE, out.width='100%'}
-readRDS(paste0(here::here(),"/Output/Mapas_2010-2020.rds"))
+knitr::include_graphics(paste0(here::here(), "/img/Mapas_2010_2020.png"))
 ```

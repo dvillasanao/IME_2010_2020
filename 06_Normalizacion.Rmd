@@ -18,6 +18,12 @@ $\circ \: max ({DP}_{2})$: es el valor máximo u objetivo que puede tomar el ín
 **Estimado insesgado de la varianza poblacional**      
 
 $$s^{2} = \frac{1}{n-1}\left(x_{i}-\bar{x}\right)^{2} = \frac{\sum_{i=1}^{n}(x_{i}^{2})}{n-1} - \frac{\sum_{i=1}^{n}(x_{i})^{2}}{(n-1)\: n } = \left(\frac{n-1}{n}\right)s_{n}^{2} $$
+Se calcula la desviación estándar muestral y su inversa para un conjunto de indicadores simples. Para cada elemento:   
+- Extrae las columnas 5 a 13 del data frame correspondiente (`DP2_`).  
+- Calcula la desviación estándar para cada una de estas columnas.  
+- Ajusta la desviación estándar para obtener la desviación estándar muestral.  
+- Calcula la inversa de la desviación estándar muestral.  
+- Almacena los resultados en un data frame dentro de la lista `desvest`.    
 
 ```{r}
 # Desviación estándar de los indicadores
@@ -64,6 +70,10 @@ Para este tipo de cálculo es necesario conocer los puntos más extremos que pue
 
 **Escenarios del mínimo y máximo valor en el índice DP2**  
 
+Se calculan los valores mínimo y máximo del índice `DP2` para diferentes escenarios y años. Para cada elemento, se calcula:   
+- `Valor mínimo`: Calcula la diferencia absoluta entre minRV_2010 y vector_minimo, ajusta con la inversa de la desviación estándar muestral y los factores de corrección, y suma las filas para obtener el DP2.   
+- `Valor máximo`: Calcula la diferencia absoluta entre minRV_2010 y un vector de ceros (vector_maximo), ajusta con la inversa de la desviación estándar muestral y los factores de corrección, y suma las filas para obtener el DP2.   
+
 ```{r}
 minimo <- NULL
 maximo <- NULL
@@ -91,6 +101,8 @@ maximo [[i]] <- data.frame(AÑO = paste(tablas[i]), Escenario = "Máximo", tabla
 ## Índice normalizado {-}
 
 **Se guarda la base de datos con el índice normalizado**  
+
+Se calcula un nuevo indicador denominado `IMN para cada año, normalizando el índice DP2 entre sus valores mínimos y máximos. 
 
 ```{r}
 for(i in 1:3){

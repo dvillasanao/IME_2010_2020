@@ -45,6 +45,9 @@ El requisito de precisión, generalmente se establece cuando el coeficiente de v
 
 `alloc` lista que especifica el esquema de asignación. La lista debe contener 3 números para los 3 exponentes q1, q2 y q3 en el esquema de asignación general (ver paquete de `stratification`). El valor predeterminado es la asignación de **Neyman** (q1 = q3 = 0.5 y q2 = 0)   
 
+
+A continuación, se realiza un análisis de estratificación sobre los diferentes años, usando la función `strata.cumrootf()`, almacenando los resultados de errores estándar, medias y varianzas en matrices que luego se guardan en listas.   
+
 ```{r}
 start.time <- Sys.time()
 DH_Entidad <- list()
@@ -79,7 +82,9 @@ time.taken
 ```
 
 
-#### Número óptimo de clases {-}
+#### Número óptimo de clases {-}   
+
+Se toma cada matriz resultante de errores estándar de la lista `stderr`, y luego selecciona la fila que tiene el coeficiente de variación (`CV`) más bajo. Estos resultados se almacenan en la lista `min.strata`, la cual contendrá los data.frames correspondientes a las filas con el menor `CV `para cada uno de los tres conjuntos de datos en `stderr`.    
 
 ```{r}
 min.strata <- NULL
@@ -121,7 +126,7 @@ tabla %>%
 
 
 
-```{r, echo = FALSE, results=FALSE, out.width='80%'}
+```{r, echo = FALSE, eval = FALSE, out.width='80%'}
 p <- NULL
 for(i in 1:3) {
 p[[i]] <- stderr[[i]] %>%
@@ -134,25 +139,32 @@ p[[i]] <- stderr[[i]] %>%
                            vjust = -1,
                             size = 6,
                              color = "red",
-                              family = "montserrat") +
+                              family = "Montserrat Medium") +
                   geom_hline(data = min.strata[[i]], aes(yintercept = CV), color = "red") +
                    theme_minimal() + 
-                    theme(title = element_text(family = "montserrat"), 
-                          plot.title = element_text(size = 22, family = "montserrat"),
-                          plot.subtitle = element_text(size = 20, family = "montserrat"),
-                          axis.text = element_text(size = 14, family = "montserrat"),
-                          axis.title = element_text(size = 18, family = "montserrat")) + 
+                    theme(title = element_text(family = "Montserrat Medium"), 
+                          plot.title = element_text(size = 22, family = "Montserrat Medium"),
+                          plot.subtitle = element_text(size = 20, family = "Montserrat Medium"),
+                          axis.text = element_text(size = 14, family = "Montserrat Medium"),
+                          axis.title = element_text(size = 18, family = "Montserrat Medium")) + 
                      scale_y_continuous(labels = scales::number_format(accuracy = 0.01)) +
                  labs(title = "Coeficiente de variación óptimo",
                        subtitle = paste(tablas[i]),
                         y = "CV", 
                          x = "iteraciones") 
 }
-p[[3]]
+```
+
+```{r, echo = FALSE, fig.width=12, fig.height=12, out.width='100%'}
+knitr::include_graphics(paste0(here::here(), "/img/iteraciones.png"))
 ```
 
 
-Se toman en cuenta el número de clases que salen del los resultados del método iterativo. 
+Se toman en cuenta el número de clases que salen del los resultados del método iterativo. Utilizando la función `strata.cumrootf()` de la paquetería `stratification` con parámetros específicos y el número de clases (`nclass`) obtenido de `min.strata`.       
+- `CV = 0.05`: Establece el coeficiente de variación.   
+- `Ls = 5`: Establece el número de estratos.   
+- `alloc = c(0.5, 0, 0.5)`: Define la asignación para la estratificación.    
+- `nclass = min.strata[[i]][,1]`: Establece el número de clases utilizando el primer valor de la fila con el menor CV en `min.strata`.     
 
 ```{r}
 for(i in 1:3){
@@ -164,7 +176,7 @@ for(i in 1:3){
 }
 ```
 
-Se agregan los datos a la base original
+Se agregan los datos a la base original.     
 
 ```{r}
 ##Se agrega a la base DP2
@@ -192,7 +204,12 @@ for(i in tablas){
 ```
 
 
-### Límites de los estratos {-}
+### Límites de los estratos {-}   
+
+Se crea un data frame llamado `limites` que contiene los límites de ciertos intervalos para los años `2010`, `2015` y `2020`. Cada columna contiene una combinación de:   
+- El valor mínimo del índice de marginación (`IM:`) para el año correspondiente.  
+- Los valores de los límites de los estratos (`bh`) calculados previamente.  
+- El valor máximo del índice de marginación (`IM_`) para el año correspondiente.  
 
 ```{r}
 limites <- data.frame("2010" = c(min(DP2_2010$IM_2010), strata.DP2_2010$bh, max(DP2_2010$IM_2010)),

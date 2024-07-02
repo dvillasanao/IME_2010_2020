@@ -98,9 +98,11 @@ DP_{2}=\sum^{n}_{i=1}\frac{d_{i}}{\sigma_{i}}(1-R^{2}_{i,i-1,...,1})\:\:;\;\;con
 <span><span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="va">tablas</span><span class="op">)</span><span class="op">{</span>   </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/assign.html">assign</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"DP2_datos_"</span>, <span class="va">i</span><span class="op">)</span>, <span class="op">(</span><span class="op">-</span><span class="fl">1</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/get.html">get</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"tabla_"</span>, <span class="va">i</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="fl">5</span><span class="op">:</span><span class="fl">13</span><span class="op">]</span><span class="op">)</span><span class="op">)</span> </span>
 <span><span class="op">}</span></span></code></pre></div>
+<p>Para asegurar las propiedades del indicador sintético, un aumento en los indicadores simples implica un aumento en la carencia de los servicios, lo que implicaría una disminución de la calidad de vida, por lo que se multiplica cada indicador por <strong>-1</strong>, de esta forma, un aumento en la variable supone una mejora en la calidad de vida.</p>
 <div id="base-de-referencia" class="section level2 unnumbered">
 <h2>Base de referencia<a class="anchor" aria-label="anchor" href="#base-de-referencia"><i class="fas fa-link"></i></a>
 </h2>
+<p>Se define al valor de referencia para cada uno de los indicadores parciales, con la finalidad de hacer comparaciones entre las diferentes unidades espaciales (Entidades Federativas). Siendo este el valor mínimo de cada indicador simple como referencia, representado como la “situación no deseada”. Como resultado, un valor alto implicaría una distancia alejada con respecto a una situación teórica “situación no deseada”. Por lo tanto <span class="math inline">\(d_{ij}\)</span> mide la distancia entre el indicador parcial <span class="math inline">\(j\)</span> en la entidad <span class="math inline">\(i\)</span> y su valor de referencia.</p>
 <p>Se toma como base de referencia el valor del mínimo del <code>2010 - 2020</code>, ya que este tipo de cambio permite la comparabilidad en el tiempo.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#Base de referencia 2010 - 2020</span></span>
@@ -116,7 +118,7 @@ DP_{2}=\sum^{n}_{i=1}\frac{d_{i}}{\sigma_{i}}(1-R^{2}_{i,i-1,...,1})\:\:;\;\;con
 <span>                                       <span class="op">-</span><span class="fl">85.5702744072091</span><span class="op">)</span>, <span class="co"># PO2SM</span></span>
 <span>                                     nm <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"ANALF"</span>, <span class="st">"SBASC"</span>, <span class="st">"OVSDE"</span>, <span class="st">"OVSEE"</span>, <span class="st">"OVSAE"</span>, <span class="st">"VHAC"</span>, <span class="st">"OVPT"</span>,<span class="st">"PL.5000"</span>, <span class="st">"PO2SM"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
-<div id="bwlplyejre" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="nxlbslsyoj" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
   
   <div class="inline-table"><table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false" style="-webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; font-family: 'Montserrat Medium'; display: table; border-collapse: collapse; line-height: normal; margin-left: auto; margin-right: auto; color: #333333; font-size: 8px; font-weight: normal; font-style: normal; background-color: #FFFFFF; width: auto; border-top-style: solid; border-top-width: 2px; border-top-color: #A8A8A8; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #A8A8A8; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3;" bgcolor="#FFFFFF">
 <thead style="border-style: none;">
@@ -154,6 +156,20 @@ DP_{2}=\sum^{n}_{i=1}\frac{d_{i}}{\sigma_{i}}(1-R^{2}_{i,i-1,...,1})\:\:;\;\;con
 <div id="método-de-distancia-dp_2" class="section level2 unnumbered">
 <h2>Método de Distancia <span class="math inline">\(DP_{2}\)</span><a class="anchor" aria-label="anchor" href="#m%C3%A9todo-de-distancia-dp_2"><i class="fas fa-link"></i></a>
 </h2>
+<p>Utilizando paquetería <code>p2distance</code>, se crean objetos con nombres dinámicos (<code>ind_i</code>) donde <strong>i</strong> es cada elemento de los años de observación.</p>
+<ul>
+<li>
+<code>p2distance</code>: Función que calcula las distancias DP2.<br>
+</li>
+<li>
+<code>matriz</code>: Datos de entrada, convertidos a matriz.<br>
+</li>
+<li>
+<code>reference_vector</code>: Vector de referencia para el cálculo de distancias.<br>
+</li>
+<li>
+<code>iterations</code>: Número de iteraciones para el cálculo.</li>
+</ul>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="va">p2distance</span><span class="op">)</span></span>
 <span><span class="co">##Calculo del Método de Distancias DP2</span></span>
@@ -165,7 +181,7 @@ DP_{2}=\sum^{n}_{i=1}\frac{d_{i}}{\sigma_{i}}(1-R^{2}_{i,i-1,...,1})\:\:;\;\;con
 <p><strong>Total de iteraciones</strong></p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">iteration</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/get.html">get</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"ind_"</span>, <span class="va">tablas</span><span class="op">[</span><span class="va">x</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">[[</span><span class="st">"iteration"</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
-<div id="idujijvoxo" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="brmqqzxbnu" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
   
   <div class="inline-table"><table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false" style="-webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; font-family: 'Montserrat Medium'; display: table; border-collapse: collapse; line-height: normal; margin-left: auto; margin-right: auto; color: #333333; font-size: 8px; font-weight: normal; font-style: normal; background-color: #FFFFFF; width: auto; border-top-style: solid; border-top-width: 2px; border-top-color: #A8A8A8; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #A8A8A8; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3;" bgcolor="#FFFFFF">
 <thead style="border-style: none;">
@@ -193,7 +209,7 @@ DP_{2}=\sum^{n}_{i=1}\frac{d_{i}}{\sigma_{i}}(1-R^{2}_{i,i-1,...,1})\:\:;\;\;con
 </tbody>
 </table></div>
 </div>
-<p>Se anexan los resultados a las bases de datos original</p>
+<p>Se anexan los resultados obtenidos a las bases de datos original</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="va">tablas</span><span class="op">)</span><span class="op">{</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/assign.html">assign</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"DP2_"</span>,<span class="va">i</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/get.html">get</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"tabla_"</span>,<span class="va">i</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/get.html">get</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"ind_"</span>,<span class="va">i</span><span class="op">)</span><span class="op">)</span><span class="op">[[</span><span class="st">"p2distance"</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>

@@ -101,6 +101,7 @@ donde:</p>
 <h2>Número óptimo de clases del método de Dalenius &amp; Hodge<a class="anchor" aria-label="anchor" href="#n%C3%BAmero-%C3%B3ptimo-de-clases-del-m%C3%A9todo-de-dalenius-hodge"><i class="fas fa-link"></i></a>
 </h2>
 <p><code>alloc</code> lista que especifica el esquema de asignación. La lista debe contener 3 números para los 3 exponentes q1, q2 y q3 en el esquema de asignación general (ver paquete de <code>stratification</code>). El valor predeterminado es la asignación de <strong>Neyman</strong> (q1 = q3 = 0.5 y q2 = 0)</p>
+<p>A continuación, se realiza un análisis de estratificación sobre los diferentes años, usando la función <code>strata.cumrootf()</code>, almacenando los resultados de errores estándar, medias y varianzas en matrices que luego se guardan en listas.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">start.time</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.time</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">DH_Entidad</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -132,10 +133,11 @@ donde:</p>
 <span><span class="va">end.time</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.time</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">time.taken</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">end.time</span> <span class="op">-</span> <span class="va">start.time</span>, <span class="fl">2</span><span class="op">)</span></span>
 <span><span class="va">time.taken</span></span>
-<span><span class="co">#&gt; Time difference of 0.18 secs</span></span></code></pre></div>
+<span><span class="co">#&gt; Time difference of 0.09 secs</span></span></code></pre></div>
 <div id="número-óptimo-de-clases" class="section level4 unnumbered">
 <h4>Número óptimo de clases<a class="anchor" aria-label="anchor" href="#n%C3%BAmero-%C3%B3ptimo-de-clases"><i class="fas fa-link"></i></a>
 </h4>
+<p>Se toma cada matriz resultante de errores estándar de la lista <code>stderr</code>, y luego selecciona la fila que tiene el coeficiente de variación (<code>CV</code>) más bajo. Estos resultados se almacenan en la lista <code>min.strata</code>, la cual contendrá los data.frames correspondientes a las filas con el menor <code>CV</code>para cada uno de los tres conjuntos de datos en <code>stderr</code>.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">min.strata</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
 <span><span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span><span class="op">{</span></span>
@@ -143,7 +145,7 @@ donde:</p>
 <span>                      <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
 <span>                       <span class="fu">slice</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/which.min.html">which.min</a></span><span class="op">(</span><span class="va">.</span><span class="op">$</span><span class="va">CV</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
-<div id="yjopigcnbh" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="sdsekvukmh" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
   
   <div class="inline-table"><table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false" style="-webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; font-family: 'Montserrat Medium'; display: table; border-collapse: collapse; line-height: normal; margin-left: auto; margin-right: auto; color: #333333; font-size: 8px; font-weight: normal; font-style: normal; background-color: #FFFFFF; width: auto; border-top-style: solid; border-top-width: 2px; border-top-color: #A8A8A8; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #A8A8A8; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3;" bgcolor="#FFFFFF">
 <thead style="border-style: none;">
@@ -179,8 +181,12 @@ donde:</p>
 </tbody>
 </table></div>
 </div>
-<div class="inline-figure"><img src="Scripts-DP2_files/figure-html/unnamed-chunk-28-1.png" width="80%"></div>
-<p>Se toman en cuenta el número de clases que salen del los resultados del método iterativo.</p>
+<div class="inline-figure"><img src="img/iteraciones.png" width="100%"></div>
+<p>Se toman en cuenta el número de clases que salen del los resultados del método iterativo. Utilizando la función <code>strata.cumrootf()</code> de la paquetería <code>stratification</code> con parámetros específicos y el número de clases (<code>nclass</code>) obtenido de <code>min.strata</code>.<br>
+- <code>CV = 0.05</code>: Establece el coeficiente de variación.<br>
+- <code>Ls = 5</code>: Establece el número de estratos.<br>
+- <code>alloc = c(0.5, 0, 0.5)</code>: Define la asignación para la estratificación.<br>
+- <code>nclass = min.strata[[i]][,1]</code>: Establece el número de clases utilizando el primer valor de la fila con el menor CV en <code>min.strata</code>.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span><span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/assign.html">assign</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"strata.DP2_"</span>,<span class="va">tablas</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span>, <span class="fu">strata.cumrootf</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/get.html">get</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"DP2_"</span>,<span class="va">tablas</span><span class="op">[</span><span class="va">i</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">[</span>,<span class="fl">14</span><span class="op">]</span>,</span>
@@ -189,7 +195,7 @@ donde:</p>
 <span>                                                             alloc <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">0</span>, <span class="fl">0.5</span><span class="op">)</span>, </span>
 <span>                                                              nclass <span class="op">=</span> <span class="va">min.strata</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
-<p>Se agregan los datos a la base original</p>
+<p>Se agregan los datos a la base original.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">##Se agrega a la base DP2</span></span>
 <span><span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span><span class="op">{</span></span>
@@ -217,11 +223,15 @@ donde:</p>
 <div id="límites-de-los-estratos" class="section level3 unnumbered">
 <h3>Límites de los estratos<a class="anchor" aria-label="anchor" href="#l%C3%ADmites-de-los-estratos"><i class="fas fa-link"></i></a>
 </h3>
+<p>Se crea un data frame llamado <code>limites</code> que contiene los límites de ciertos intervalos para los años <code>2010</code>, <code>2015</code> y <code>2020</code>. Cada columna contiene una combinación de:<br>
+- El valor mínimo del índice de marginación (<code>IM:</code>) para el año correspondiente.<br>
+- Los valores de los límites de los estratos (<code>bh</code>) calculados previamente.<br>
+- El valor máximo del índice de marginación (<code>IM_</code>) para el año correspondiente.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">limites</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="st">"2010"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">DP2_2010</span><span class="op">$</span><span class="va">IM_2010</span><span class="op">)</span>, <span class="va">strata.DP2_2010</span><span class="op">$</span><span class="va">bh</span>, <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">DP2_2010</span><span class="op">$</span><span class="va">IM_2010</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>                      <span class="st">"2015"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">DP2_2015</span><span class="op">$</span><span class="va">IM_2015</span><span class="op">)</span>, <span class="va">strata.DP2_2015</span><span class="op">$</span><span class="va">bh</span>, <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">DP2_2015</span><span class="op">$</span><span class="va">IM_2015</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>                      <span class="st">"2020"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">DP2_2020</span><span class="op">$</span><span class="va">IM_2020</span><span class="op">)</span>, <span class="va">strata.DP2_2020</span><span class="op">$</span><span class="va">bh</span>, <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">DP2_2020</span><span class="op">$</span><span class="va">IM_2020</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<div id="cpoledjstl" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<div id="yazyrbwfgc" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
   
   <div class="inline-table"><table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false" style="-webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; font-family: 'Montserrat Medium'; display: table; border-collapse: collapse; line-height: normal; margin-left: auto; margin-right: auto; color: #333333; font-size: 8px; font-weight: normal; font-style: normal; background-color: #FFFFFF; width: auto; border-top-style: solid; border-top-width: 2px; border-top-color: #A8A8A8; border-right-style: none; border-right-width: 2px; border-right-color: #D3D3D3; border-bottom-style: solid; border-bottom-width: 2px; border-bottom-color: #A8A8A8; border-left-style: none; border-left-width: 2px; border-left-color: #D3D3D3;" bgcolor="#FFFFFF">
 <thead style="border-style: none;">
