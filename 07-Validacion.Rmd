@@ -32,7 +32,7 @@ Variables_sort %>%
                heading.align = "center",
                heading.subtitle.font.size = 12,
                table.align = "center",
-               table.font.names = "Century Gothic",
+               table.font.names = 'Century Gothic',
                table.font.size = 10,
                data_row.padding = px(1)) %>%
     tab_style(style = list(cell_text(align = "center",
@@ -40,7 +40,8 @@ Variables_sort %>%
                locations = list(cells_title(groups = c("title")))) %>%
      cols_label(`2010` = md("**2010**"), 
                 `2015` = md("**2015**"),
-                `2020` = md("**2020**")) %>%
+                `2020` = md("**2020**"))  %>%
+      cols_width(everything() ~ px(80)) %>%
       as_raw_html() 
 ```
 
@@ -68,20 +69,21 @@ cor.coeff %>%
                 heading.align = "center",
                 heading.subtitle.font.size = 12,
                 table.align = "center",
-                table.font.names = "Century Gothic",
+                table.font.names = 'Century Gothic',
                 table.font.size = 10,
                 data_row.padding = px(1)) %>%
-      tab_style(style = list(cell_text(align = "center",
+     tab_style(style = list(cell_text(align = "center",
                                        weight = 'bold')),
-                locations = list(cells_title(groups = c("title")))) %>%
-       cols_label(`Ind_2010` = md("**Ind**"), 
-                  `2010` = md("**2010**"),
-                  `Ind_2015` = md("**Ind**"),
-                  `2015` = md("**2015**"), 
-                  `Ind_2020` = md("**Ind**"),
-                  `2020` = md("**2020**")) %>%
-        fmt_number(columns = c(2 ,4, 6), decimals = 3) %>%
-         as_raw_html()                          
+               locations = list(cells_title(groups = c("title")))) %>%
+      cols_label(`Ind_2010` = md("**Ind**"), 
+                 `2010` = md("**2010**"),
+                 `Ind_2015` = md("**Ind**"),
+                 `2015` = md("**2015**"), 
+                 `Ind_2020` = md("**Ind**"),
+                 `2020` = md("**2020**")) %>%
+       fmt_number(columns = c(2 ,4, 6), decimals = 3) %>%
+        cols_width(everything() ~ px(80)) %>%
+         as_raw_html()          
 ```
 
 ## Factor de corrector  {-}
@@ -95,7 +97,7 @@ correction_factors <- NULL
 for(i in 1:3){
 correction_factors[i] <- as.data.frame(lapply(List_DP2, function(x) get(paste0("ind_",tablas[i]))$correction_factors))
 }
-###Intetar de pegar el nombre de la columna 
+###Nombres de la columna 
 correction_factors <- do.call(cbind.data.frame, c(Variables_sort, correction_factors)) %>%
                         subset(., select = c(1, 4, 2, 5, 3, 6))
 colnames(correction_factors) <- c("Ind_2010", "2010", "Ind_2015", "2015", "Ind_2020", "2020")
@@ -106,24 +108,25 @@ colnames(correction_factors) <- c("Ind_2010", "2010", "Ind_2015", "2015", "Ind_2
 correction_factors %>%
   gt() %>%
    tab_header(title = "Correction Factors") %>%
-    tab_options(heading.title.font.size = 14, 
+    tab_options(heading.title.font.size = 12, 
                 heading.align = "center",
-                heading.subtitle.font.size = 12,
+                heading.subtitle.font.size = 10,
                 table.align = "center",
-                table.font.names = "Century Gothic",
-                table.font.size = 10,
+                table.font.names = 'Century Gothic',
+                table.font.size = 8,
                 data_row.padding = px(1)) %>%
-      tab_style(style = list(cell_text(align = "center",
-                                       weight = 'bold')),
-                locations = list(cells_title(groups = c("title")))) %>%
-       cols_label(`Ind_2010` = md("**Ind**"), 
-                  `2010` = md("**2010**"),
-                  `Ind_2015` = md("**Ind**"),
-                  `2015` = md("**2015**"), 
-                  `Ind_2020` = md("**Ind**"),
-                  `2020` = md("**2020**")) %>%
-        fmt_number(columns = c(2 ,4, 6), decimals = 4) %>%
-         as_raw_html()                         
+     tab_style(style = list(cell_text(align = "center",
+                                      weight = 'bold')),
+               locations = list(cells_title(groups = c("title")))) %>%
+      cols_label(`Ind_2010` = md("**Ind**"), 
+                 `2010` = md("**2010**"),
+                 `Ind_2015` = md("**Ind**"),
+                 `2015` = md("**2015**"), 
+                 `Ind_2020` = md("**Ind**"),
+                 `2020` = md("**2020**")) %>%
+       fmt_number(columns = c(2 ,4, 6), decimals = 4) %>%
+        cols_width(everything() ~ px(80)) %>%
+         as_raw_html()                             
 ```
 
 
@@ -175,7 +178,8 @@ discrimination_coefficient %>%
                   `Ind_2020` = md("**Ind**"),
                   `2020` = md("**2020**")) %>%
         fmt_number(columns = c(2 ,4, 6), decimals = 3) %>%
-         as_raw_html() 
+         cols_width(everything() ~ px(80)) %>%
+          as_raw_html()        
 ```
 
 ## “Cantidad de Información Global de Ivanovic Pena Relativa Individual” {-}
@@ -207,7 +211,7 @@ alpha %>%
                 heading.align = "center",
                 heading.subtitle.font.size = 12,
                 table.align = "center",
-                table.font.names = "Century Gothic",
+                table.font.names = 'Century Gothic',
                 table.font.size = 10,
                 data_row.padding = px(1)) %>%
       tab_style(style = list(cell_text(align = "center",
@@ -220,6 +224,7 @@ alpha %>%
                   `Ind_2020` = md("**Ind**"),
                   `2020` = md("**2020**")) %>%
         fmt_number(columns = c(2 ,4, 6), decimals = 3) %>%
-         as_raw_html() 
+         cols_width(everything() ~ px(80)) %>%
+          as_raw_html()    
 ```
 

@@ -29,5 +29,5 @@ sesion_info <- devtools::session_info()
 ```{r, echo = FALSE}
 kable(dplyr::select(tibble::as_tibble(sesion_info$packages %>% dplyr::filter(attached == TRUE)),
                     c(package, loadedversion, source))) %>%
-   kable_classic(full_width = TRUE, html_font = 'Montserrat Medium', font_size = 10) 
+   kable_classic(full_width = TRUE, html_font = "Century Gothic", font_size = 10) 
 ```

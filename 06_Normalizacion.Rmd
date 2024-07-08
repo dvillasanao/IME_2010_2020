@@ -134,7 +134,7 @@ DP2_2020 %>%
                 locations = list(cells_title(groups = c("title")))) %>%
       fmt_integer(columns = "POB_TOT", sep_mark = " ") %>%
        fmt_number(columns = c(5:13), decimals = 1) %>%
-        fmt_number(columns = c(14, 16), decimals = 3) %>%
+        fmt_number(columns = c("IM_2020", "IMN"), decimals = 3) %>%
          cols_width(starts_with("POB") ~ px(100), 
                     starts_with("NOM") ~ px(200), 
                     everything() ~ px(60)) %>%

@@ -169,11 +169,11 @@ Se toman en cuenta el número de clases que salen del los resultados del método
 
 ```{r}
 for(i in 1:3){
-  assign(paste0("strata.DP2_",tablas[i]), strata.cumrootf(get(paste0("DP2_",tablas[i]))[,14],
-                                                           CV = 0.05,
-                                                            Ls = 5,
-                                                             alloc = c(0.5, 0, 0.5), 
-                                                              nclass = min.strata[[i]][,1]))
+  assign(paste0("strata.DP2_", tablas[i]), strata.cumrootf(get(paste0("DP2_",tablas[i]))[,14],
+                                                            CV = 0.05,
+                                                             Ls = 5,
+                                                              alloc = c(0.5, 0, 0.5), 
+                                                               nclass = min.strata[[i]][,1]))
 }
 ```
 
@@ -182,25 +182,25 @@ Se agregan los datos a la base original.
 ```{r}
 ##Se agrega a la base DP2
 for(i in 1:3){
-  assign(paste0("DP2_",tablas[i]), data.frame(get(paste0("DP2_", tablas[i])),
-                                               get(paste0("strata.DP2_", tablas[i]))[["stratumID"]]))
+  assign(paste0("DP2_", tablas[i]), data.frame(get(paste0("DP2_", tablas[i])),
+                                                get(paste0("strata.DP2_", tablas[i]))[["stratumID"]]))
 }
 
 # Se cambian los nombres de las columnas 
 for(i in 1:3){
-  columns = get(paste0("DP2_",tablas[i]))
+  columns = get(paste0("DP2_", tablas[i]))
   colnames(columns) = c("CVE_ENT", "NOM_ENT", "POB_TOT", "ANIO",
                         "ANALF", "SBASC", "OVSDE", "OVSEE", "OVSAE", "VHAC", "OVPT", "PL.5000", "PO2SM",
                         paste0("IM_",tablas[i]), paste0("GM_",tablas[i]))
-  assign(paste0("DP2_",tablas[i]), columns)
+  assign(paste0("DP2_", tablas[i]), columns)
   rm(columns)
 }
 
 # Se cambian los levels a los grados de marginación correspondientes
 for(i in tablas){
-  niveles = get(paste0("DP2_",i)) 
+  niveles = get(paste0("DP2_", i)) 
   levels(niveles[,15]) = c("Muy alto", "Alto", "Medio", "Bajo", "Muy bajo")
-  assign(paste0("DP2_",i), niveles)
+  assign(paste0("DP2_", i), niveles)
 }
 ```
 
@@ -246,6 +246,8 @@ tabla %>%
      tab_style(style = list(cell_text(align = "center",
                                        weight = 'bold')),
                 locations = list(cells_title(groups = c("title")))) %>%
+      tab_style(style = list(cell_text(align = "center")),
+                 locations = list(cells_title(groups = c("subtitle")))) %>%
       cols_label(AÑO = md("**AÑO**"), 
                  `Muy alto` = md("**Muy alto**"),
                  `Alto` = md("**Alto**"),

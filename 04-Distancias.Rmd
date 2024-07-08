@@ -96,7 +96,7 @@ minRV %>%
       tab_style(style = list(cell_text(align = "center",
                                         weight = 'bold')),
                 locations = list(cells_title(groups = c("title")))) %>%
-       tab_style(style = list(cell_text(align = "left")),
+       tab_style(style = list(cell_text(align = "center")),
                   locations = list(cells_title(groups = c("subtitle")))) %>%
        cols_label(AÑO = md("**AÑO**"), 
                   ANALF = md("**ANALF**"),
@@ -174,7 +174,7 @@ Se anexan los resultados obtenidos a las bases de datos original
 
 ```{r}
 for(i in tablas){
-assign(paste0("DP2_",i), cbind(get(paste0("tabla_",i)), get(paste0("ind_",i))[["p2distance"]]))
+assign(paste0("DP2_", i), cbind(get(paste0("tabla_", i)), get(paste0("ind_", i))[["p2distance"]]))
 }
 
 # Se cambian los nombres de las columnas 

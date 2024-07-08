@@ -48,6 +48,7 @@ El objetivo principal de este índice es proporcionar información objetiva y cu
 
 **Publicación** [Índice De Marginación Por Entidad Federativa Y Municipio 2020](https://www.gob.mx/conapo/documentos/indices-de-marginacion-2020-284372).    
 
+**Índice de marginación a nivel estatal** [Bookdown](https://dvillasanao.github.io/IME_2010-2020/) 
 **Índice de marginación a nivel municipal** [Bookdown](https://dvillasanao.github.io/IMM_2010-2020/)   
 **Índice de marginación a nivel localidad** [Bookdown](https://dvillasanao.github.io/IML_2010_2020/)   
 **Índice de marginación a nivel AGEB** [Bookdown](https://dvillasanao.github.io/IML_2010-2020/)   
