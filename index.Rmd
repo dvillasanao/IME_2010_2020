@@ -31,6 +31,13 @@ El índice de marginación del Consejo Nacional de Población (`CONAPO`) celebra
 - Ajustes en Indicadores: Se realizaron ajustes para alinear las estimaciones con las recomendaciones de organismos nacionales e internacionales.    
 - Método de Estratificación: Se mantuvo la técnica de estratificación de Dalenius y Hodges para el cálculo de los estratos del índice.   
 
+
+<a href="/img/Comparativo_2010_2020.png" data-lightbox="image-1" data-title="Comparativo">
+```{r, echo=FALSE, out.width='70%', fig.align='center'}
+knitr::include_graphics(paste0(here::here(), "/img/Comparativo_2010_2020.png"))
+```
+</a>
+
 **Impacto y Futuro**:   
 
 El objetivo principal de este índice es proporcionar información objetiva y cuantitativa sobre las disparidades socioeconómicas entre las entidades federativas, de manera que se pueda orientar la toma de decisiones y la asignación de recursos para reducir la marginación y promover un desarrollo más equitativo en el país. La información proporcionada por el índice de marginación permite identificar las entidades federativas con mayores niveles de marginación y desigualdad, así como aquellas que presentan avances y mejoras en su desarrollo socioeconómico. Esto facilita la identificación de buenas prácticas y la generación de estrategias de intervención focalizadas en áreas específicas.    
