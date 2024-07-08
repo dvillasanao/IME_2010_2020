@@ -40,4 +40,13 @@ Para compilar este libro necesitas tener instalados los siguientes programas y p
 
 ### Bookdown
 
-**Enlace**: <https://dvillasanao.github.io/IME_2010_2020/>
+**Enlace**: <https://dvillasanao.github.io/IME_2010_2020/>  
+
+### Documentos Bookdown  
+
+**Índice de marginación a nivel estatal** [Bookdown](https://dvillasanao.github.io/IME_2010_2020/)   
+**Índice de marginación a nivel municipal** [Bookdown](https://dvillasanao.github.io/IMM_2010-2020/)   
+**Índice de marginación a nivel localidad** [Bookdown](https://dvillasanao.github.io/IML_2010_2020/)   
+**Índice de marginación a nivel AGEB** [Bookdown](https://dvillasanao.github.io/IML_2010-2020/)   
+**Índice de marginación a nivel colonia** [Bookdown](https://dvillasanao.github.io/IMC_2020/)   
+
