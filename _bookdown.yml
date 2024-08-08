@@ -1,8 +1,8 @@
 book_filename: "Scripts DP2"
 new_session: false
 before_chapter_script: _common.R
-view: https://github.com/dvillasanao/IME_2010_2020
-edit: https://github.com/dvillasanao/IME_2010_2020
+view: https://dvillasanao.github.io/IME_2010_2020/
+edit: https://dvillasanao.github.io/IME_2010_2020/
 include-after-body: scrollbar_start.html
 always_allow_html: yes
 delete_merged_file: true
