@@ -155,7 +155,7 @@ p[[i]] <- stderr[[i]] %>%
 }
 ```
 
-<a href="/img/iteraciones.png" data-lightbox="image-1" data-title="iteraciones">
+<a href="/img/iteraciones.png" data-lightbox="image-3" data-title="iteraciones">
 ```{r, echo = FALSE, fig.width=12, fig.height=12, out.width='100%'}
 knitr::include_graphics(paste0(here::here(), "/img/iteraciones.png"))
 ```

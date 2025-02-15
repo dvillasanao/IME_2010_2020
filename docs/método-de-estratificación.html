@@ -7,10 +7,10 @@
 <title>Método de estratificación | Índice de marginación a nivel estatal 2010 - 2020</title>
 <meta name="author" content="Diana Villasana Ocampo">
 <meta name="description" content="Método de estratificación de Dalenius &amp; Hodges strata.cumrootf: cumulative root frequency method by Dalenius and Hodges (1959). Con la obtención del índice de marginación a través del método DP2,...">
-<meta name="generator" content="bookdown 0.40 with bs4_book()">
+<meta name="generator" content="bookdown 0.42 with bs4_book()">
 <meta property="og:title" content="Método de estratificación | Índice de marginación a nivel estatal 2010 - 2020">
 <meta property="og:type" content="book">
-<meta property="og:url" content="https://dvillasanao.github.io/IMU_2010-2020/método-de-estratificación.html">
+<meta property="og:url" content="https://dvillasanao.github.io/IME_2010_2020/método-de-estratificación.html">
 <meta property="og:image" content="https://raw.githubusercontent.com/mxabierto/assets/master/img/logos/conapo.png">
 <meta property="og:description" content="Método de estratificación de Dalenius &amp; Hodges strata.cumrootf: cumulative root frequency method by Dalenius and Hodges (1959). Con la obtención del índice de marginación a través del método DP2,...">
 <meta name="twitter:card" content="summary">
@@ -125,7 +125,7 @@ donde:</p>
 <span><span class="va">end.time</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.time</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">time.taken</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">end.time</span> <span class="op">-</span> <span class="va">start.time</span>, <span class="fl">2</span><span class="op">)</span></span>
 <span><span class="va">time.taken</span></span>
-<span><span class="co">#&gt; Time difference of 0.25 secs</span></span></code></pre></div>
+<span><span class="co">#&gt; Time difference of 0.2 secs</span></span></code></pre></div>
 <div id="número-óptimo-de-clases" class="section level4 unnumbered">
 <h4>Número óptimo de clases<a class="anchor" aria-label="anchor" href="#n%C3%BAmero-%C3%B3ptimo-de-clases"><i class="fas fa-link"></i></a>
 </h4>
@@ -173,7 +173,7 @@ donde:</p>
 </tbody>
 </table></div>
 </div>
-<p><a href="/img/iteraciones.png" data-lightbox="image-1" data-title="iteraciones">
+<p><a href="/img/iteraciones.png" data-lightbox="image-3" data-title="iteraciones">
 <img src="img/iteraciones.png" width="100%"></a></p>
 <p>Se toman en cuenta el número de clases que salen del los resultados del método iterativo. Utilizando la función <code>strata.cumrootf()</code> de la paquetería <code>stratification</code> con parámetros específicos y el número de clases (<code>nclass</code>) obtenido de <code>min.strata</code>.<br>
 - <code>CV = 0.05</code>: Establece el coeficiente de variación.<br>

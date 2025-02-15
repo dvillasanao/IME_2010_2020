@@ -79,7 +79,7 @@ p
 ```
 
 <!--html_preserve-->
-<iframe src = "https://leafletmarginacionxestado2010-2020.netlify.app/" position= "absolute"; top="0"; left="0"; bottom="0"; right="0"; width="750px"; height="700px"; border="none"; margin="0"; padding="0";  frameborder="0"; overflow="hidden"; display= "block";  min-height= "100vh";>"</iframe>
+<iframe src = "https://leafletmarginacionxestado2010-2020.netlify.app/" position= "absolute"; top="0"; left="0"; bottom="0"; right="0"; width="700px"; height="700px"; border="none"; margin="0"; padding="0";  frameborder="0"; overflow="hidden"; display= "block";  min-height= "100vh";>"</iframe>
 <!--/html_preserve-->
 
 ## Comparación en el tiempo {.unnumbered}
