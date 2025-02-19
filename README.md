@@ -53,11 +53,12 @@ El bookdown está disponible en [Netlify](https://ime-2010-2020-bookdown.netlify
 **Índice de marginación a nivel AGEB** [Bookdown](https://dvillasanao.github.io/IMU_2010-2020/)\
 **Índice de marginación a nivel colonia** [Bookdown](https://dvillasanao.github.io/IMC_2020/)  
 
+
 ## Código de Conducta
 
 Por favor, revisa el [Código de Conducta](CODE_OF_CONDUCT.md) antes de contribuir.
 
 ## Licencia
 
-Este documento está licenciado bajo la licencia Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0). Esto significa que puedes copiar, distribuir y modificar el trabajo, siempre y cuando atribuyas la obra original y la compartas bajo los mismos términos.
+Este trabajo de Diana Villasana Ocampo está bajo una <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"> Licencia Creative Commons Atribución 4.0 Internacional.</a>.
 
